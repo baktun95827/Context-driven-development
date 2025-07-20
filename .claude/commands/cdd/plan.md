@@ -2,65 +2,156 @@
 
 ## OBJECTIVE:
 
-To act as an expert technical architect, collaborating with the human user through an interactive dialogue to create the best possible implementation plan for the task defined in `$ARGUMENTS`. The final output will be a highly detailed, mutually-agreed-upon checklist appended to the task file.
+To act as an expert technical architect, creating a clear, actionable implementation plan through structured dialogue. The final output will be a detailed checklist with time estimates and clear success criteria.
+
+**SUCCESS CRITERIA:** Plan is complete when all major decisions are made and checklist items are specific enough that any competent developer could execute them.
 
 ---
 
-### STAGE 1: ANALYSIS & PREPARATION (Silent, Internal Step)
+### STAGE 1: CONTEXT LOADING & ANALYSIS
 
-1.  **MANDATORY: Load Full Context:** Read `.ccd/VISION.md`, `CLAUDE.md`.
-2.  **Tactical Log Review:** Smart-scan `.ccd/LOG.md` for `## LESSON LEARNED:` sections.
-3.  **Grounded Code Research:** As we previously designed, formulate a request for relevant code files to understand existing patterns. **(Wait for user to provide the code).**
-4.  **Initial Brainstorming:** Based on all the above, internally brainstorm several potential approaches to implementing the feature. Identify key decision points (e.g., "Should we use a relational DB or a NoSQL store for this data?", "Should this be a real-time feature with WebSockets or a simple polling mechanism?").
+**VALIDATION CHECKLIST:**
+- [ ] Read `.claude/VISION.md` for project goals and principles
+- [ ] Read `CLAUDE.md` for technical rules and patterns  
+- [ ] Scan `.claude/LOG.md` for recent lessons learned
+- [ ] Analyze existing codebase patterns for consistency
+
+**SMART FILE DISCOVERY:**
+Based on the task type, also consider reading related files using these **generic patterns**:
+
+**For Authentication/User Features:**
+- User-related data structures (models, entities, classes)
+- Authentication logic (login, verification, permissions)
+- Security middleware or guards
+- Existing auth-related tests
+
+**For API/Service Features:**
+- Endpoint definitions (routes, controllers, handlers)
+- Business logic (services, use cases, domain logic)
+- Data access patterns (repositories, DAOs, queries)
+- Request/response handling
+
+**For UI/Frontend Features:**
+- Similar UI components or views
+- State management patterns
+- Styling or theming files
+- User interaction handlers
+
+**For Testing Features:**
+- Existing test files in the same area
+- Test configuration and setup files
+- Test utilities and helpers
+- Mock or fixture data
+
+**For Data/Storage Features:**
+- Schema definitions
+- Migration files
+- Data access layers
+- Configuration files
+
+**DISCOVERY STRATEGY:**
+1. Identify task category (auth, api, ui, data, testing, etc.)
+2. Use keywords to search: `**/*{auth|user|login}*` or `**/*{test|spec}*`
+3. Look for naming patterns in the existing codebase
+4. **BATCH READ** related files in single operation for efficiency:
+   - Group similar functionality together
+   - Read in logical dependency order 
+   - Use multiple Read tool calls in one message for parallel processing
+5. Note any patterns or conventions to follow in the plan
+
+**BATCH READING EFFICIENCY TIPS:**
+- ✅ Read 3-5 related files in one message using multiple tool calls
+- ✅ Prioritize files that establish patterns (existing similar features)
+- ✅ Include test files to understand expected behavior patterns
+- ✅ Adapt search terms to project's actual naming conventions
+- ❌ Don't assume specific folder structures or file extensions
+- ❌ Don't read files one-by-one - batch them for better context understanding
+
+**BRAINSTORMING FRAMEWORK:**
+Ask yourself these specific questions:
+1. What are the 2-3 main technical approaches for this feature?
+2. What are the key architectural decisions that must be made?
+3. What existing patterns in the codebase should be followed?
+4. What could go wrong with each approach?
+
+**OUTPUT:** Prepare 2-3 concrete options with clear pros/cons.
 
 ---
 
-### STAGE 2: THE PLANNING DIALOGUE (Interactive Conversation)
+### STAGE 2: STRUCTURED PLANNING DIALOGUE
 
-You will now initiate a structured conversation with me (the user) to refine the plan.
+**DIALOGUE TEMPLATE:**
 
-1.  **Present High-Level Options & Ask Key Questions:**
+```
+**TASK ANALYSIS:** [One sentence summary of what we're building]
 
-    - Start by summarizing your understanding of the task.
-    - Present the 2-3 main architectural or implementation options you've identified. For each option, briefly list its pros and cons in this specific project's context.
-    - End by asking clear, high-level questions to guide the decision.
+**TECHNICAL OPTIONS:**
 
-    **Example of the First Message to Me:**
+**Option A: [Name]**
+- **Pros:** [2-3 specific advantages]
+- **Cons:** [2-3 specific drawbacks]  
+- **Effort:** [Rough time estimate]
 
-    > "I have analyzed the request to implement a 'real-time notification system'. Based on our `.ccd/VISION.md` which emphasizes simplicity and our `CLAUDE.md` which uses FastAPI, I see two main approaches:
-    >
-    > **Option A: WebSockets**
-    >
-    > - **Pros:** True real-time, highly efficient.
-    > - **Cons:** Adds complexity to our stack (requires managing persistent connections).
-    >
-    > **Option B: Server-Sent Events (SSE)**
-    >
-    > - **Pros:** Simpler than WebSockets, uses standard HTTP.
-    > - **Cons:** One-way communication only (server to client).
-    >
-    > **To proceed, I need your guidance:**
-    >
-    > 1.  Which approach do you believe better aligns with our "Simplicity Above All" principle?
-    > 2.  Do we anticipate needing client-to-server real-time communication in the future?"
+**Option B: [Name]**
+- **Pros:** [2-3 specific advantages]
+- **Cons:** [2-3 specific drawbacks]
+- **Effort:** [Rough time estimate]
 
-2.  **Iterate and Refine Based on My Feedback:**
-    - Wait for my answers.
-    - Based on my responses, either make a decision and propose the next level of detailed questions, or refine the options.
-    - Continue this dialogue until all major architectural and technical decisions have been made and we have a clear, shared vision for the implementation path.
+**KEY DECISIONS NEEDED:**
+1. [Specific decision question]
+2. [Specific decision question]
+3. [Maximum 3 questions total]
+```
+
+**ITERATION RULES:**
+- Limit discussion to maximum 3 decision rounds
+- Each round should resolve 1-2 major architectural choices
+- Always provide specific, actionable options
+- Stop when technical approach is clearly defined
 
 ---
 
-### STAGE 3: GENERATE THE FINAL BLUEPRINT
+### STAGE 3: GENERATE FINAL CHECKLIST
 
-Once the dialogue is complete and all key decisions have been made, perform the following:
+**ANNOUNCEMENT:** "Planning complete. Generating detailed implementation checklist based on our decisions."
 
-1.  **Announce Finalization:** State clearly that the planning dialogue is complete and you will now generate the final, detailed checklist based on our agreed-upon strategy.
+**CHECKLIST FORMAT:**
+```markdown
+## IMPLEMENTATION PLAN
 
-    - **Example:** "Great, thank you for the clarifications. Based on our decision to use Server-Sent Events, I will now generate the detailed step-by-step implementation plan."
+**SUMMARY:** [One sentence describing the agreed approach]
+**ESTIMATED TOTAL TIME:** [Total hours/days]
 
-2.  **Generate the Checklist:** Create the final, highly detailed, step-by-step Markdown checklist. This checklist should be a direct translation of our decisions into concrete, executable tasks.
+### Phase 1: [Phase Name] (Est: X hours)
+- [ ] [Specific action with clear success criteria] 
+- [ ] [Include file names and function signatures where possible]
+- [ ] [Each item should take 15-60 minutes maximum]
 
-3.  **Append to Task File:** Append this final plan to the task file at `$ARGUMENTS`.
+### Phase 2: [Phase Name] (Est: X hours)
+- [ ] [Continue pattern...]
 
-4.  **Confirmation:** Announce that the final, mutually-agreed-upon plan has been appended to the task file. Provide a high confidence score. State that the system is now ready for the autonomous `/cdd:act` command.
+**VALIDATION STEPS:**
+- [ ] [How to verify each phase works]
+- [ ] [Integration tests or manual verification steps]
+
+**ROLLBACK PLAN:** [What to do if something goes wrong]
+```
+
+**QUALITY CHECKS:**
+- Each checklist item starts with a verb
+- No item takes longer than 60 minutes  
+- Success criteria are testable
+- File paths and function names are specified when possible
+- Dependencies between items are clear
+
+**FINAL ACTIONS:**
+1. **VALIDATION CHECKS:** Before appending plan, verify:
+   - [ ] Plan aligns with VISION.md principles (especially "Simplicity Above All")
+   - [ ] All steps follow CLAUDE.md technical rules (TDD, API design, etc.)
+   - [ ] File paths and naming follow existing project conventions
+   - [ ] No conflicts with recently completed tasks (check LOG.md)
+   - [ ] Estimated times are realistic (15-60 min per step)
+
+2. Append formatted plan to task file `$ARGUMENTS`
+3. Confirm plan is ready for `/cdd:act` execution
+4. Provide confidence score (High/Medium/Low) based on plan clarity and validation

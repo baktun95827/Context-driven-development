@@ -1,18 +1,55 @@
 # Action: Initialize a New Task
 
-Based on the user's description: "$ARGUMENTS"
+## OBJECTIVE:
+Create a properly structured task file from the user's description: "$ARGUMENTS"
 
-1.  Create a short, descriptive, snake_case filename for this task (e.g., `implement_user_auth`).
-2.  Prepend a three-digit incremental number to the filename (check the `tasks/` directory for the next available number, like `001_`).
-3.  Create a new Markdown file in the `.ccd/tasks/` directory with this name.
-4.  Inside the new file, write the following content:
+## VALIDATION:
+**Check task description quality:**
+- [ ] Is the description specific and actionable?
+- [ ] Does it describe WHAT to build, not HOW to build it?
+- [ ] Is it scoped to a single feature or change?
 
-    ```markdown
-    # TASK: $ARGUMENTS
+**GOOD TASK EXAMPLES:**
+- ✅ "Implement user authentication with JWT tokens"
+- ✅ "Add email validation to user registration"  
+- ✅ "Create a dashboard for admin users"
+- ✅ "Fix memory leak in background task processor"
 
-    ## Plan:
+**POOR TASK EXAMPLES:**
+- ❌ "Make the app better" (too vague)
+- ❌ "Use React hooks and implement auth with JWT and add tests" (multiple tasks)
+- ❌ "Write UserService.authenticate() method in auth.py" (too prescriptive about HOW)
 
-    _This plan has not been generated yet. Run /cdd:plan on this file to create it._
-    ```
+## TASK CREATION PROCESS:
 
-5.  Announce the successful creation of the task file and tell me to run `/cdd:plan` on it next.
+1. **GENERATE FILENAME**
+   - Create descriptive snake_case name (max 50 chars)
+   - Check `tasks/` directory for next number (001_, 002_, etc.)
+   - Format: `{number}_{descriptive_name}.md`
+
+2. **CREATE TASK FILE** 
+   Create file in `tasks/` directory with this template:
+
+   ```markdown
+   # TASK: $ARGUMENTS
+
+   **Created:** [YYYY-MM-DD HH:MM:SS]
+   **Status:** Planning Required
+
+   ## Description:
+   [One paragraph elaborating on the task if needed]
+
+   ## Success Criteria:
+   - [ ] [What does "done" look like?]
+   - [ ] [How will we know it works?]
+
+   ## Implementation Plan:
+   _This plan has not been generated yet. Run `/cdd:plan` on this file to create it._
+   ```
+
+3. **CONFIRM CREATION**
+   Announce: "✅ Task created: `tasks/{filename}.md`. Next step: run `/cdd:plan {filename}` to generate implementation plan."
+
+## VALIDATION FAILURE:
+If task description is too vague or complex, suggest improvements:
+"⚠️ Task description needs refinement. Consider: [specific suggestions for improvement]"
