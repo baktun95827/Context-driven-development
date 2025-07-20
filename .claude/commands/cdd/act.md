@@ -1,44 +1,85 @@
-# Action: Intelligently Act on the Next Step in a Plan
+# Action: Autonomously and Atomically Execute an Entire Plan
 
 ## OBJECTIVE:
 
-To act as an intelligent agent by executing ONLY THE NEXT incomplete step in a plan. This command operates in a strict "single-step" mode and will halt after each action to await further instruction.
+To act as a self-sufficient agent, executing all steps in the provided plan (`$ARGUMENTS`) in a single, uninterrupted "focus session". All file modifications (logging and checklist updates) will be batched and performed ONLY ONCE at the very end of a successful execution run.
 
 ---
 
-### STEP 1: MANDATORY: Load Core Context
+### PRE-FLIGHT CHECK: LOAD CONTEXT & PREPARE IN-MEMORY LOG
 
-Read `VISION.md` and `CLAUDE.md`.
+_This happens only once at the beginning._
 
-### STEP 2: Identify Next Action
-
-Read the task file at `$ARGUMENTS`. Scan its checklist and identify the VERY FIRST incomplete item (`- [ ]`). This identified item is the "Target Action".
-
-### STEP 3: Pre-Action Sanity Check
-
-1.  **Review Immediate History:** Briefly glance at the **last 1-2 entries** in `LOG.md`.
-2.  **Validate Action Coherency:** Ask yourself: "Given what I just did, does this 'Target Action' still make sense?"
-3.  **Make a Decision:**
-    - **If YES, the action is valid:** Announce "Sanity check passed. Proceeding with action." and move to Step 4.
-    - **If NO, the action is now flawed:** You MUST STOP. Announce the coherency failure and recommend running `/cdd:revise-plan`.
+1.  **Load Core Context:** Read `.ccd/VISION.md` and `CLAUDE.md`.
+2.  **Load Plan:** Read the entire plan from the task file at `$ARGUMENTS`.
+3.  **Initialize In-Memory Log:** Create a temporary, internal list in your memory to track the results of each step. Do not write to any files yet.
 
 ---
 
-### STEP 4: Execute the Target Action
+### AUTONOMOUS EXECUTION LOOP (IN-MEMORY):
 
-Perform the "Target Action" precisely as described in the checklist.
+You will now enter a loop. For each incomplete checklist item (`- [ ]`) in the plan, from top to bottom, you will perform the following sub-routine:
 
-### STEP 5: MANDATORY: Log Progress (Unified Format)
+#### 1. Pre-Action Sanity Check:
 
-After successful completion, append a **single-line `COMPLETED` entry** to `LOG.md`, including a timestamp.
+- Glance at your **internal, in-memory log** of the last completed action.
+- Ask yourself: "Given what I just did, does this next step still make sense?"
+- If the check fails, ABORT the entire operation. Discard your in-memory log and report the coherency failure, recommending `/cdd:revise-plan`.
 
-**The log entry MUST follow this exact format:**
-`[YYYY-MM-DD HH:MM:SS] COMPLETED: [Brief summary of what you did] from task file [$ARGUMENTS].`
+#### 2. Execute Action:
 
-### STEP 6: Update Task List
+- Perform the action described in the checklist item.
 
-Edit the task file (`$ARGUMENTS`) and mark the "Target Action's" checkbox as done (`- [x]`).
+#### 3. Record In-Memory Progress:
 
-### STEP 7: Confirm and Halt
+- Upon successful completion of the step, add a summary of what you did to your **internal, in-memory list**. **Example:** `* Created user model in `models.py`.`
 
-Announce that the step has been successfully completed. Conclude by stating you are ready for the next command. **DO NOT proceed to the next checklist item automatically.**
+#### 4. Loop to Next Step:
+
+- **Immediately continue to the next incomplete checklist item without providing any output in the chat.**
+
+---
+
+### POST-EXECUTION: ATOMIC UPDATE & REPORTING
+
+This stage is reached ONLY if the entire loop completes without any errors.
+
+1.  **Announce Completion:** Start by announcing that the entire plan has been successfully executed.
+
+2.  **Batch-Update LOG.md:**
+
+    - Now, and only now, open `.ccd/LOG.md`.
+    - Append a single, comprehensive `COMPLETED` event block to the file. This block will contain the **full in-memory log** you've been keeping.
+
+    **The log entry MUST follow this exact format:**
+
+    ```
+    ---
+    ## COMPLETED TASK: [YYYY-MM-DD HH:MM:SS]
+    **Task File:** tasks/002_implement_user_auth.md
+    **Summary of Actions:**
+    *   Created Pydantic model for user login request.
+    *   Implemented password hashing utility in `utils/security.py`.
+    *   Wrote unit test for password hashing.
+    *   ... (and so on for all completed steps)
+    ---
+    ```
+
+3.  **Batch-Update Task File:**
+
+    - Open the task file (`$ARGUMENTS`).
+    - Iterate through your completed steps and mark all corresponding checkboxes from `[ ]` to `[x]` in a single file-write operation.
+
+4.  **Final Confirmation:** Conclude with a message: "Execution complete. `LOG.md` and the task file have been atomically updated. Ready for the next assignment."
+
+---
+
+### EXIT CONDITIONS:
+
+The loop will terminate and no files will be written if:
+
+- Any step execution fails.
+- Any Pre-Action Sanity Check fails.
+- A human user provides a new prompt, interrupting the process.
+
+In case of failure, you will report the error clearly, but you will **NOT** modify `.ccd/LOG.md` or the task file, leaving the system in a clean state, ready for debugging.
