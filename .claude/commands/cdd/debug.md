@@ -8,7 +8,7 @@ To not just fix the provided error, but to understand its root cause at the deep
 
 ### STAGE 1: IMMEDIATE CONTEXT & PROBLEM INGESTION
 
-1.  **MANDATORY: Load Full Project Context:** Read `.ccd/VISION.md`, `CLAUDE.md`, and the full `.ccd/LOG.md` to understand the project's state leading up to the error.
+1.  **MANDATORY: Load Full Project Context:** Read `.claude/VISION.md`, `CLAUDE.md`, and the full `.claude/LOG.md` to understand the project's state leading up to the error.
 2.  **Analyze Error Message:** Deeply analyze the user-provided error message and stack trace: `$ARGUMENTS`.
 
 ---
