@@ -32,14 +32,19 @@ Before starting execution, proactively read related files based on task patterns
 
 **Batch Reading Strategy:**
 ```
-If plan mentions "user authentication":
-→ Search for: **/*{user|auth|login}* and read related files
+Extract keywords from plan → Generate search patterns:
 
-If plan mentions "API endpoint":  
-→ Search for: **/*{route|endpoint|api}* and read existing patterns
+Plan mentions "data processing":
+→ Search for: **/*{data,process,parse,transform}* and read related files
 
-If plan mentions "UI component":
-→ Search for: **/*{component|view|ui}* and read similar implementations
+Plan mentions "file operations":  
+→ Search for: **/*{file,io,read,write,stream}* and read existing patterns
+
+Plan mentions "algorithm implementation":
+→ Search for: **/*{algorithm,sort,search,calculate}* and read similar implementations
+
+Plan mentions "configuration setup":
+→ Search for: **/*{config,setup,env,init}* and read configuration patterns
 ```
 
 **EFFICIENCY RULE:** Read all likely-needed files NOW to avoid context switching during execution.
@@ -136,9 +141,10 @@ After 3+ similar tasks, also add a PATTERN LEARNED entry:
 ```
 
 **Pattern Examples:**
-- **Auth tasks** typically need: user data structures, authentication logic, security tests
-- **API endpoints** typically need: routing definitions, request/response handling, endpoint tests
-- **UI components** typically need: component implementations, styling, interaction tests
+- **Data processing tasks** typically need: input parsing, processing logic, output formatting, validation
+- **Algorithm tasks** typically need: core implementation, edge case handling, performance tests
+- **Configuration tasks** typically need: setup files, validation logic, documentation
+- **File handling tasks** typically need: I/O operations, error handling, format validation
 
 #### C. UPDATE TASK FILE (Single Write Operation)  
 Change all `- [ ]` to `- [x]` for completed items in the task file.

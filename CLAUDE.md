@@ -6,6 +6,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 This is the Context-Driven Development (CDD) Framework - a sophisticated system for managing AI-assisted development workflows. The framework treats AI as an "amnesiac genius" that needs comprehensive context before every operation.
 
+**Universal Applicability:** This framework works with any programming language, project type, domain, or complexity level:
+
+- **Languages**: Python, JavaScript, Go, Rust, C++, Java, C#, PHP, Ruby, Swift, Kotlin, etc.
+- **Project Types**: CLI tools, desktop apps, mobile apps, games, scientific computing, data analysis, machine learning, system administration, DevOps, embedded systems
+- **Domains**: Finance, healthcare, education, research, entertainment, security, infrastructure, automation
+- **Scales**: Single-file scripts, multi-module projects, distributed systems, monorepos, microservices
+
 ### Memory System
 
 The framework implements a three-layer memory architecture:
@@ -123,15 +130,17 @@ All new logic must be introduced via failing tests first. This is enforced by th
 
 #### `/cdd:start` - Task Initialization
 **Use for:**
-- ✅ "Implement user authentication with JWT tokens"
-- ✅ "Add email validation to user registration"  
-- ✅ "Create admin dashboard for user management"
-- ✅ "Fix memory leak in background processor"
+- ✅ "Implement sorting algorithm for large datasets"
+- ✅ "Add input validation to data parser"  
+- ✅ "Create configuration management system"
+- ✅ "Fix memory leak in processing pipeline"
+- ✅ "Setup automated testing framework"
+- ✅ "Implement caching layer for expensive operations"
 
 **Avoid for:**
-- ❌ "Make the app better" (too vague)
-- ❌ "Use React hooks and add auth and tests" (multiple tasks)
-- ❌ "Write authenticate() method in auth.py" (too prescriptive)
+- ❌ "Make the code better" (too vague)
+- ❌ "Add logging and fix bugs and write tests" (multiple tasks)
+- ❌ "Write sortArray() method in utils.py" (too prescriptive about HOW)
 
 #### `/cdd:plan` - Strategic Planning
 **Best for:**
@@ -140,11 +149,13 @@ All new logic must be introduced via failing tests first. This is enforced by th
 - When multiple technical approaches are possible
 - Features that need integration planning
 
-**Planning scenarios:**
-- **Authentication systems** - Choose JWT vs sessions, where to store tokens
-- **API design** - REST vs GraphQL, versioning strategy
-- **Database design** - Schema choices, indexing strategy
-- **Frontend architecture** - Component structure, state management
+**Planning scenarios - adapt these examples to your domain:**
+- **Data structures** - Choose representations, storage formats, access patterns
+- **Processing approach** - Sequential vs parallel, batch vs streaming, algorithms
+- **Architecture patterns** - Modular vs monolithic, layers, separation of concerns  
+- **Integration points** - How components communicate, interfaces, protocols
+- **Error handling** - Recovery strategies, validation approaches, failure modes
+- **Performance considerations** - Time complexity, memory usage, bottlenecks
 
 #### `/cdd:act` - Execution Engine
 **Use when:**
@@ -162,23 +173,23 @@ All new logic must be introduced via failing tests first. This is enforced by th
 **Two modes for different needs:**
 
 **Direct Change Mode** (for clear instructions):
-- "Change database from PostgreSQL to SQLite"
-- "Remove the email verification step"
-- "Add input validation before user creation"
-- "Use FastAPI instead of Flask"
+- "Change storage format from JSON to binary"
+- "Remove the intermediate caching step"
+- "Add input validation before data processing"
+- "Use quicksort instead of bubble sort"
 
 **Discussion Mode** (for concerns/questions):
-- "Is the separate database file really necessary?"
+- "Is the separate configuration file really necessary?"
 - "This approach seems overly complex"
-- "Should we consider using a different library?"
-- "What about performance implications?"
+- "Should we consider using a different algorithm?"
+- "What about memory usage implications?"
 
 #### `/cdd:debug` - Error Resolution
 **Use for any error type:**
-- **Runtime errors**: NoneType, KeyError, connection failures
-- **Logic errors**: Wrong calculations, incorrect behavior
-- **Integration errors**: API failures, database connection issues
-- **Build errors**: Import problems, dependency conflicts
+- **Runtime errors**: Null pointer exceptions, index out of bounds, memory issues
+- **Logic errors**: Wrong calculations, incorrect algorithms, unexpected behavior
+- **Integration errors**: File I/O failures, network issues, external dependency problems
+- **Build errors**: Compilation errors, missing dependencies, configuration issues
 
 **Three-level solution approach:**
 1. **Immediate fix** - Stop the crash/error right now
@@ -192,38 +203,46 @@ All new logic must be introduced via failing tests first. This is enforced by th
 - Refine development practices based on real experience
 - Keep the framework's "constitution" current and effective
 
-### Task Category Workflows
+### Universal Task Workflows
 
-#### Authentication Features
+#### Feature Development (any domain)
 ```
-1. /cdd:start "Implement JWT authentication"
-2. /cdd:plan → reads existing auth patterns, proposes security approach
-3. /cdd:act → creates models, services, routes, tests atomically
-4. Pattern learned: auth tasks always need models + services + middleware + tests
-```
-
-#### API Development
-```
-1. /cdd:start "Create user management API endpoints"
-2. /cdd:plan → follows REST principles, considers validation patterns
-3. /cdd:act → implements routes, request/response models, tests
-4. Pattern learned: API tasks need routers + models + validation + tests
+1. /cdd:start "Implement [domain-specific feature]"
+2. /cdd:plan → discovers existing patterns, proposes technical approach
+3. /cdd:act → implements core logic, supporting code, tests atomically
+4. Pattern learned: feature tasks need core implementation + supporting files + validation
 ```
 
-#### Frontend Components
+#### Data Processing Tasks
 ```
-1. /cdd:start "Create responsive navigation component"
-2. /cdd:plan → considers existing component patterns, styling approach
-3. /cdd:act → creates component, hooks, styles, stories/tests
-4. Pattern learned: UI tasks need component + hooks + styles + tests
+1. /cdd:start "Process [data type] with [transformation]"
+2. /cdd:plan → considers input/output formats, processing strategies
+3. /cdd:act → implements processing logic, input validation, output generation
+4. Pattern learned: data tasks need parsing + processing + validation + output
 ```
 
-#### Bug Fixes
+#### Algorithm Implementation
 ```
-1. /cdd:debug "NoneType object has no attribute 'id'"
+1. /cdd:start "Implement [algorithm name] for [problem]"
+2. /cdd:plan → considers time/space complexity, edge cases, testing approach
+3. /cdd:act → implements algorithm, handles edge cases, adds comprehensive tests
+4. Pattern learned: algorithm tasks need core logic + edge case handling + performance tests
+```
+
+#### Configuration/Setup Tasks
+```
+1. /cdd:start "Setup [tool/environment] for [purpose]"
+2. /cdd:plan → considers environment requirements, configuration options
+3. /cdd:act → creates configuration files, setup scripts, documentation
+4. Pattern learned: setup tasks need configuration + automation + documentation
+```
+
+#### Bug Fixes (universal)
+```
+1. /cdd:debug "[describe the error or unexpected behavior]"
 2. /cdd:revise → adjust affected task plan if needed
 3. /cdd:act → apply immediate fix + root cause fix + lesson logging
-4. Lesson learned: always validate that dependencies cannot return None
+4. Lesson learned: [domain-specific insight to prevent similar issues]
 ```
 
 ### Efficiency Best Practices
