@@ -152,22 +152,67 @@ Present the proposed changes using this standardized format:
 
 ---
 
-### STEP 4: APPLY CHANGES
+### STEP 4: APPLY CHANGES WITH VERIFICATION
 
 **ONLY AFTER RECEIVING "Proceed":**
 
-1. **APPLY CHANGES**
-   - Edit the task file (`$ARGUMENTS`) with exact changes as proposed
-   - Submit file changes for user review
+#### A. ATTEMPT CHANGES
+1. **Try MultiEdit First** (for efficiency):
+   - Apply all changes using MultiEdit if 5+ edits required
+   - If fewer than 5 edits, use individual Edit operations
    
-2. **LOG THE REVISION**
-   - Add brief entry to `.claude/LOG.md`:
+2. **Track Intended Changes**:
+   - Store list of all changes that should be applied
+   - Record exact old_string → new_string mappings
+
+#### B. VERIFY ALL CHANGES APPLIED (CRITICAL)
+1. **Mandatory Verification Step**:
+   - Read the task file back after edit operations
+   - Check that EVERY intended change was actually applied
+   - Compare current file content against expected changes
+
+2. **Failure Detection**:
    ```
-   ## PLAN REVISED: [YYYY-MM-DD HH:MM:SS]
-   **Task:** [task file name]
-   **Change:** [brief description of what was changed]
+   **VERIFICATION RESULTS:**
+   ✅ Applied: [list of changes that were successfully made]
+   ❌ Failed: [list of changes that were NOT applied]
    ```
 
-3. **FINAL CONFIRMATION**
-   - "✅ Plan revision complete. Use `/cdd:act` to resume execution."
+#### C. HANDLE PARTIAL FAILURES
+1. **If ANY Changes Failed to Apply**:
+   - **DO NOT DECLARE SUCCESS**
+   - Report partial failure: "⚠️ MultiEdit only applied X of Y changes"
+   - Use individual Edit operations for failed changes
+   - Retry verification after each individual edit
+
+2. **Retry Strategy**:
+   - Break failed MultiEdit changes into individual Edit operations
+   - Apply them one by one with verification after each
+   - If individual Edit also fails, report specific string match issue
+
+#### D. SUCCESS VALIDATION
+**ONLY DECLARE SUCCESS AFTER 100% VERIFICATION**:
+
+1. **Final Verification Check**:
+   ```
+   **CHANGE VERIFICATION COMPLETE:**
+   Total intended changes: [number]
+   Successfully applied: [number]  
+   Failed to apply: [number]
+   ```
+
+2. **Success Criteria**:
+   - ALL intended changes must be verified as applied
+   - File content must match expected state
+   - No failed edits remaining
+
+3. **FINAL CONFIRMATION** (only if 100% successful):
+   - "✅ Plan revision complete. All [number] changes verified. Use `/cdd:act` to resume execution."
    - Do NOT continue discussion unless user asks follow-up questions
+
+#### E. ERROR HANDLING
+**If Changes Cannot Be Applied**:
+- Report specific failed changes with old_string that couldn't be found
+- Suggest manual review of the file content
+- Do NOT log as successful revision
+- Recommend user check file state before proceeding

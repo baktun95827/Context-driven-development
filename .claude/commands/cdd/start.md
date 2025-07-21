@@ -24,11 +24,11 @@ Create a properly structured task file from the user's description: "$ARGUMENTS"
 
 1. **GENERATE FILENAME**
    - Create descriptive snake_case name (max 50 chars)
-   - Check `tasks/` directory for next number (001_, 002_, etc.)
+   - Check `.claude/cddtasks/` directory for next number (001_, 002_, etc.)
    - Format: `{number}_{descriptive_name}.md`
 
 2. **CREATE TASK FILE** 
-   Create file in `tasks/` directory with this template:
+   Create file in `.claude/cddtasks/` directory with this template:
 
    ```markdown
    # TASK: $ARGUMENTS
@@ -48,7 +48,7 @@ Create a properly structured task file from the user's description: "$ARGUMENTS"
    ```
 
 3. **CONFIRM CREATION**
-   Announce: "✅ Task created: `tasks/{filename}.md`. Next step: run `/cdd:plan {filename}` to generate implementation plan."
+   Announce: "✅ Task created: `.claude/cddtasks/{filename}.md`. Next step: run `/cdd:plan {filename}` to generate implementation plan."
 
 ## VALIDATION FAILURE:
 If task description is too vague or complex, suggest improvements:

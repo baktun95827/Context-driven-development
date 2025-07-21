@@ -13,7 +13,7 @@ Provide a quick, comprehensive overview of current project state to help with co
 - [ ] Read `.claude/VISION.md` for project goals
 - [ ] Read `CLAUDE.md` for technical rules
 - [ ] Scan `.claude/LOG.md` for recent activity (last 5 entries)
-- [ ] Check `tasks/` directory for active/pending tasks
+- [ ] Check `.claude/cddtasks/` directory for active/pending tasks
 - [ ] Identify recently modified files (git status if available)
 
 ---
@@ -31,7 +31,7 @@ Provide a quick, comprehensive overview of current project state to help with co
 
 ## 📋 CURRENT TASKS
 **Active Task:** [current task file being worked on, if any]
-**Pending Tasks:** [list of tasks/ files that haven't been started]
+**Pending Tasks:** [list of .claude/cddtasks/ files that haven't been started]
 **Completed Recently:** [last 2 completed tasks from LOG.md]
 
 ## 📂 KEY FILES TO KNOW
@@ -62,8 +62,8 @@ Provide a quick, comprehensive overview of current project state to help with co
 ```markdown
 ## 🚀 RECOMMENDED NEXT ACTIONS
 [Based on current state, suggest specific next steps like:]
-- "Continue with `/cdd:act tasks/003_...md` to finish authentication"
-- "Run `/cdd:plan tasks/004_...md` to plan the dashboard feature"  
+- "Continue with `/cdd:act .claude/cddtasks/003_...md` to finish authentication"
+- "Run `/cdd:plan .claude/cddtasks/004_...md` to plan the dashboard feature"  
 - "Use `/cdd:debug [error]` to resolve the failing tests"
 - "Start new work with `/cdd:start [description]`"
 ```

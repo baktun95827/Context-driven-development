@@ -72,10 +72,10 @@ The `/cdd:plan` command implements collaborative architecture:
 project/
 ├── .claude/
 │   ├── commands/cdd/        # Framework command definitions
-│   ├── CLAUDE.md           # Technical constitution (this file)
+│   ├── cddtasks/           # Numbered task files (001_*, 002_*, etc.)
 │   ├── VISION.md           # Strategic north star
 │   └── LOG.md              # Dynamic project memory
-├── tasks/                  # Numbered task files (001_*, 002_*, etc.)
+├── CLAUDE.md               # Technical constitution (this file)
 └── README.md               # Framework documentation
 ```
 
