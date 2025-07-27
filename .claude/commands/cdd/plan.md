@@ -1,272 +1,196 @@
-# Action: Collaboratively Generate an Implementation Plan
+# Action: Create Task and Generate Detailed Implementation Plan
 
 ## OBJECTIVE:
 
-To act as an expert technical architect, creating a clear, actionable implementation plan through structured dialogue. The final output will be a detailed checklist with time estimates and clear success criteria.
+To create a new task file and generate the most detailed and specific implementation plan possible by clarifying all ambiguous requirements through targeted questioning.
 
-**SUCCESS CRITERIA:** Plan is complete when all major decisions are made and checklist items are specific enough that any competent developer could execute them.
+**INPUT:** Task description as `$ARGUMENTS` (e.g., "Add user authentication with JWT tokens")
+
+**SUCCESS CRITERIA:** Plan is complete when task file is created, all requirements are clarified, and checklist items are so specific that any competent developer could execute them without further questions.
+
+**CORE PRINCIPLE:** When something is uncertain or vague, always ask the user relevant questions to make sure things are clear before proceeding.
 
 ---
 
-### STAGE 1: CONTEXT LOADING & ANALYSIS
+### STAGE 1: TASK FILE CREATION
 
-**VALIDATION CHECKLIST:**
+**AUTOMATIC TASK CREATION:**
+1. **Generate filename:**
+   - Create descriptive snake_case name from `$ARGUMENTS` (max 50 chars)
+   - Check `.claude/cddtasks/` directory for next number (001_, 002_, etc.)
+   - Format: `{number}_{descriptive_name}.md`
+
+2. **Create task file template:**
+   ```markdown
+   # TASK: $ARGUMENTS
+
+   **Created:** [YYYY-MM-DD HH:MM:SS]
+   **Status:** Planning Complete
+
+   ## Description:
+   [One paragraph elaborating on the task based on clarified requirements]
+
+   ## Success Criteria:
+   - [ ] [What does "done" look like based on clarified requirements]
+   - [ ] [How will we know it works]
+
+   ## Implementation Plan:
+   [Ultra-detailed plan will be generated and inserted here]
+   ```
+
+**INITIAL VALIDATION:**
+- [ ] Is the task description specific enough for initial understanding?
+- [ ] Does it describe WHAT to build, not HOW to build it?
+- [ ] Is it scoped to a single feature or change?
+
+If task is too vague (like "make the app better"), immediately ask clarifying questions before creating the file.
+
+---
+
+### STAGE 2: CONTEXT LOADING
+
+**MANDATORY PREPARATION:**
 - [ ] Read `.claude/VISION.md` for project goals and principles
 - [ ] Read `CLAUDE.md` for technical rules and patterns  
 - [ ] Scan `.claude/LOG.md` for recent lessons learned
-- [ ] Analyze existing codebase patterns for consistency
+- [ ] Analyze the task description from `$ARGUMENTS`
 
-**SMART FILE DISCOVERY:**
-Discover related files by analyzing the task and project patterns:
-
-**DISCOVERY METHOD:**
-1. **Extract keywords** from task description (nouns, verbs, domain terms)
-2. **Search for related patterns** using those keywords
-3. **Look for similar functionality** already implemented
-4. **Find configuration and setup** files that might be relevant
-
-**UNIVERSAL SEARCH PATTERNS:**
-```
-Extract keywords from ANY task type → Generate search patterns:
-
-"user login system" → **/*{user,login,auth,session,credential,security}*
-"data processing pipeline" → **/*{data,process,transform,parse,pipeline,etl}*
-"machine learning model" → **/*{model,train,predict,feature,dataset,ml}*
-"game physics engine" → **/*{physics,collision,vector,engine,simulation}*
-"file compression tool" → **/*{compress,zip,archive,encode,decode}*
-"trading algorithm" → **/*{trade,market,price,order,strategy,portfolio}*
-"image processing" → **/*{image,pixel,filter,transform,vision,graphics}*
-"network protocol" → **/*{network,protocol,socket,tcp,udp,connection}*
-"database optimization" → **/*{database,query,index,optimize,performance}*
-"embedded sensor" → **/*{sensor,gpio,i2c,spi,hardware,embedded}*
-"web scraper" → **/*{scrape,parse,extract,html,web,crawler}*
-"configuration management" → **/*{config,settings,env,properties,yaml,json}*
-"testing framework" → **/*{test,spec,mock,fixture,assert,verify}*
-"documentation generator" → **/*{doc,readme,help,guide,manual,generate}*
-```
-
-**RELATIONSHIP DISCOVERY:**
-```
-For each task, systematically discover:
-
-**Similar Functionality:**
-- Search for: **/*{synonym1,synonym2,related_concept}*
-- Look for existing implementations of similar problems
-- Find code that handles related data types or operations
-
-**Dependencies & Integration Points:**
-- Search for: **/*{input_format,output_format,interface}*  
-- Find what provides input to your task
-- Find what consumes output from your task
-- Identify shared utilities, libraries, or frameworks
-
-**Configuration & Constants:**
-- Search for: **/*{config,const,param,setting,default}*
-- Find where similar settings are defined
-- Look for environment variables, config files, constants
-
-**Tests & Validation:**
-- Search for: **/*{test,spec,example,demo,sample}*
-- Find how similar functionality is tested
-- Look for validation patterns and edge cases
-
-**Documentation & Context:**
-- Search for: **/*{doc,readme,comment,guide,spec}*
-- Find design documents or architectural decisions
-- Look for usage examples and API documentation
-```
-
-**DISCOVERY STRATEGY:**
-1. **Extract domain concepts** from task description (don't assume categories)
-2. **Generate search keywords** from those concepts  
-3. **Use Glob patterns** to find related files: `**/*{keyword1,keyword2,keyword3}*`
-4. **Examine project structure** to understand organization patterns
-5. **BATCH READ** related files in single operation for efficiency:
-   - Group similar functionality together
-   - Read in logical dependency order 
-   - Use multiple Read tool calls in one message for parallel processing
-6. **Adapt to project conventions** - follow patterns you discover
-
-**BATCH READING EFFICIENCY TIPS:**
-- ✅ Read 3-5 related files in one message using multiple tool calls
-- ✅ Prioritize files that establish patterns (existing similar features)
-- ✅ Include test files to understand expected behavior patterns
-- ✅ Adapt search terms to project's actual naming conventions
-- ❌ Don't assume specific folder structures or file extensions
-- ❌ Don't read files one-by-one - batch them for better context understanding
-
-**BRAINSTORMING FRAMEWORK:**
-Ask yourself these specific questions:
-1. What are the 2-3 main technical approaches for this feature?
-2. What are the key architectural decisions that must be made?
-3. What existing patterns in the codebase should be followed?
-4. What could go wrong with each approach?
-
-**OUTPUT:** Prepare 2-3 concrete options with clear pros/cons.
+**CODEBASE DISCOVERY:**
+- Extract keywords from task description
+- Search for related files: `**/*{keyword1,keyword2,keyword3}*`
+- Read existing similar functionality to understand patterns
+- Batch read 3-5 related files for context
 
 ---
 
-### STAGE 2: STRUCTURED PLANNING DIALOGUE
+### STAGE 3: REQUIREMENT CLARIFICATION (MANDATORY)
 
-**DIALOGUE TEMPLATE:**
+**BEFORE TECHNICAL PLANNING:** Always identify and resolve all ambiguities in the user's requirements.
 
+**AMBIGUITY CHECKLIST:**
+- [ ] **Scope:** What exactly is included/excluded?
+- [ ] **Behavior:** How should it work in different scenarios?
+- [ ] **Data:** What inputs/outputs are expected?
+- [ ] **Integration:** How does this connect to existing systems?
+- [ ] **Performance:** Any speed/memory/capacity requirements?
+- [ ] **Error handling:** How should failures be handled?
+- [ ] **UI/UX:** What does the user interaction look like?
+- [ ] **Configuration:** What should be configurable vs hard-coded?
+
+**CLARIFICATION QUESTIONS BY TASK TYPE:**
+
+**For "Add authentication":**
+- Which method? (username/password, OAuth, JWT, sessions?)
+- What user data to store? (email, username, profile?)
+- How to handle failed attempts? (lockout, rate limiting?)
+- Password requirements? (length, complexity, reset?)
+- Post-login behavior? (redirect, token storage?)
+
+**For "Optimize performance":**
+- Which specific operations are slow?
+- Current vs target performance metrics?
+- Optimize for what? (speed, memory, throughput?)
+- Acceptable trade-offs? (speed vs storage?)
+- Tools for measurement? (profiling, benchmarks?)
+
+**For "Build dashboard":**
+- What specific data to display?
+- Who are the users and their roles?
+- Real-time updates or on-refresh?
+- What actions can users take?
+- How should data be filtered/organized?
+
+**For "Add API endpoint":**
+- Exact request/response format?
+- Authentication/authorization required?
+- Rate limiting needed?
+- Error response codes to handle?
+- Documentation format required?
+
+**REQUIREMENT CONFIRMATION:**
+Before proceeding, confirm understanding:
 ```
-**TASK ANALYSIS:** [One sentence summary of what we're building]
+**CLARIFIED REQUIREMENTS:**
+- [Specific requirement 1 based on user answers]
+- [Specific requirement 2 based on user answers]
+- [Specific requirement 3 based on user answers]
 
-**TECHNICAL OPTIONS:**
-
-**Option A: [Descriptive Name]**
-- **Pros:** [2-3 specific advantages for this project context]
-- **Cons:** [2-3 specific drawbacks or trade-offs]  
-- **Effort:** [Rough time estimate: hours/days]
-- **Complexity:** [Low/Medium/High]
-
-**Option B: [Descriptive Name]**
-- **Pros:** [2-3 specific advantages for this project context]
-- **Cons:** [2-3 specific drawbacks or trade-offs]
-- **Effort:** [Rough time estimate: hours/days] 
-- **Complexity:** [Low/Medium/High]
-
-**KEY DECISIONS NEEDED:**
-1. [Specific decision question about approach/architecture]
-2. [Specific decision question about constraints/requirements]
-3. [Optional: Specific decision question about integration/dependencies]
-
-**CONTEXT CONSIDERATIONS:**
-- **Performance requirements:** [speed/memory/throughput needs]
-- **Maintainability needs:** [how often this will be modified]
-- **Integration constraints:** [what this connects to/depends on]
+Is this understanding correct? Any additional requirements or corrections?
 ```
-
-**EXAMPLE DIALOGUE:**
-```
-**TASK ANALYSIS:** Implement efficient sorting for large datasets in memory-constrained environment.
-
-**TECHNICAL OPTIONS:**
-
-**Option A: Quicksort with Custom Pivot**
-- **Pros:** Fast average case O(n log n), in-place sorting, well-understood
-- **Cons:** Worst case O(n²), not stable, recursive stack usage
-- **Effort:** 4-6 hours
-- **Complexity:** Medium
-
-**Option B: External Merge Sort**  
-- **Pros:** Guaranteed O(n log n), stable, handles datasets larger than RAM
-- **Cons:** Requires disk I/O, more complex implementation, temporary files
-- **Effort:** 8-12 hours
-- **Complexity:** High
-
-**KEY DECISIONS NEEDED:**
-1. What's the maximum dataset size we need to handle?
-2. Is sorting stability important for this use case?
-3. Are there memory constraints that rule out certain approaches?
-```
-
-**ITERATION RULES:**
-- Limit discussion to maximum 3 decision rounds
-- Each round should resolve 1-2 major architectural choices
-- Always provide specific, actionable options
-- Stop when technical approach is clearly defined
 
 ---
 
-### STAGE 3: GENERATE FINAL CHECKLIST
+### STAGE 4: GENERATE ULTRA-DETAILED CHECKLIST
 
-**ANNOUNCEMENT:** "Planning complete. Generating detailed implementation checklist based on our decisions."
+**ANNOUNCEMENT:** "Requirements clarified. Generating ultra-detailed implementation checklist with maximum specificity."
+
+**SPECIFICITY REQUIREMENTS:**
+- Each step includes exact file names and function signatures
+- Success criteria are measurable and testable
+- Data structures and variable names specified
+- Integration points and error conditions explicit
 
 **CHECKLIST FORMAT:**
 ```markdown
 ## IMPLEMENTATION PLAN
 
-**SUMMARY:** [One sentence describing the agreed approach and why it was chosen]
-**ESTIMATED TOTAL TIME:** [Total hours/days with confidence level]
+**SUMMARY:** [One sentence describing the agreed approach]
+**ESTIMATED TIME:** [Total hours with confidence level]
 **COMPLEXITY:** [Low/Medium/High]
 
 ### Phase 1: [Phase Name] (Est: X hours)
-- [ ] [Specific action with measurable success criteria]
-- [ ] [Include file names, function signatures, or specific deliverables]
-- [ ] [Each item should take 15-60 minutes maximum]
-- [ ] [Include any prerequisites or dependencies]
+- [ ] [ACTION] [TARGET] with [SPECIFIC CRITERIA]
+  - File: `/exact/path/to/file.ext`
+  - Function: `function_name(param1: type, param2: type) -> return_type`
+  - Success: [Specific, testable outcome]
+  - Validation: [How to verify completion]
 
 ### Phase 2: [Phase Name] (Est: X hours)  
-- [ ] [Continue with specific, actionable items]
-- [ ] [Ensure each step builds logically on previous ones]
+- [ ] [ACTION] [TARGET] with [SPECIFIC CRITERIA]
+  - File: `/exact/path/to/file.ext`
+  - Dependencies: [What must be completed first]
+  - Data: [Specific formats/structures used]
+  - Success: [Specific, testable outcome]
 
-### Phase 3: [Validation & Integration] (Est: X hours)
-- [ ] [Testing strategy with specific test cases]
-- [ ] [Integration verification steps]
-- [ ] [Performance/quality validation]
+### Phase 3: Testing & Integration (Est: X hours)
+- [ ] Create unit tests in `/path/to/test_file.ext`
+  - Test cases: [list 5+ specific scenarios]
+  - Expected results: [exact values/behaviors]
+  - Edge cases: [specific boundary conditions]
+- [ ] Verify integration with [specific components]
+  - Integration points: [exact APIs/interfaces]
+  - Test data: [specific inputs to use]
+  - Success criteria: [measurable outcomes]
 
 **VALIDATION STEPS:**
-- [ ] [Unit tests: specific test cases to implement]
-- [ ] [Integration tests: end-to-end verification]
-- [ ] [Manual verification: specific scenarios to check]
-- [ ] [Performance benchmarks: specific metrics to measure]
+- [ ] Unit tests: [X specific test cases covering Y scenarios]
+- [ ] Integration tests: [specific end-to-end workflows]
+- [ ] Performance tests: [specific metrics to achieve]
+- [ ] Manual verification: [specific user actions to test]
 
 **ROLLBACK PLAN:** 
 - **If Phase 1 fails:** [Specific recovery steps]
-- **If Phase 2 fails:** [Alternative approach or rollback procedure]
-- **Emergency rollback:** [How to quickly revert all changes]
-
-**DEPENDENCIES & ASSUMPTIONS:**
-- [External dependencies this plan relies on]
-- [Key assumptions that could invalidate the approach]
-- [Integration points that must remain stable]
+- **If Phase 2 fails:** [Alternative approach]
+- **Emergency rollback:** [Quick revert procedure]
 ```
 
-**EXAMPLE CHECKLIST:**
-```markdown
-## IMPLEMENTATION PLAN
-
-**SUMMARY:** Implement quicksort with median-of-three pivot selection for balanced performance
-**ESTIMATED TOTAL TIME:** 6 hours (High confidence)
-**COMPLEXITY:** Medium
-
-### Phase 1: Core Algorithm (Est: 3 hours)
-- [ ] Create `quicksort()` function with signature `quicksort(arr, low, high)`
-- [ ] Implement `median_of_three_pivot()` helper function
-- [ ] Implement `partition()` function with Lomuto scheme
-- [ ] Add input validation for array bounds and types
-
-### Phase 2: Optimization & Edge Cases (Est: 2 hours)
-- [ ] Add iterative version to avoid stack overflow on large inputs
-- [ ] Handle duplicate elements efficiently 
-- [ ] Optimize for small arrays (< 10 elements) with insertion sort
-- [ ] Add memory usage optimization for in-place sorting
-
-### Phase 3: Testing & Validation (Est: 1 hour)
-- [ ] Unit tests: empty array, single element, already sorted
-- [ ] Performance tests: random data, worst-case data, large datasets  
-- [ ] Memory usage verification with profiling tools
-- [ ] Comparison benchmarks against standard library sort
-
-**VALIDATION STEPS:**
-- [ ] Unit tests: 15+ test cases covering edge cases
-- [ ] Performance test: sort 1M integers in < 2 seconds
-- [ ] Memory test: no additional memory allocation beyond O(log n) stack
-- [ ] Stability test: maintain relative order of equal elements (if required)
-
-**ROLLBACK PLAN:**
-- **If recursion causes stack overflow:** Switch to iterative implementation
-- **If performance is inadequate:** Fall back to hybrid approach with heapsort
-- **Emergency rollback:** Revert to using standard library sort function
-```
-
-**QUALITY CHECKS:**
-- Each checklist item starts with a verb
-- No item takes longer than 60 minutes  
-- Success criteria are testable
-- File paths and function names are specified when possible
+**QUALITY STANDARDS:**
+- Each item starts with action verb (Create, Implement, Add, Configure)
+- No item takes longer than 60 minutes
+- File paths and function names specified when possible
 - Dependencies between items are clear
+- Success criteria are testable
 
-**FINAL ACTIONS:**
-1. **VALIDATION CHECKS:** Before appending plan, verify:
-   - [ ] Plan aligns with VISION.md principles (especially "Simplicity Above All")
-   - [ ] All steps follow CLAUDE.md technical rules (TDD, API design, etc.)
-   - [ ] File paths and naming follow existing project conventions
-   - [ ] No conflicts with recently completed tasks (check LOG.md)
-   - [ ] Estimated times are realistic (15-60 min per step)
+**FINAL VALIDATION:**
+Before appending plan to task file:
+- [ ] Plan aligns with VISION.md principles
+- [ ] All steps follow CLAUDE.md technical rules
+- [ ] File paths match existing project conventions
+- [ ] No conflicts with recent tasks in LOG.md
+- [ ] Time estimates are realistic (15-60 min per step)
 
-2. Append formatted plan to task file `$ARGUMENTS`
-3. Confirm plan is ready for `/cdd:act` execution
-4. Provide confidence score (High/Medium/Low) based on plan clarity and validation
+**COMPLETION:**
+1. Update the created task file with clarified description and success criteria
+2. Append the ultra-detailed implementation plan to the task file
+3. Announce: "✅ Task created and planned: `.claude/cddtasks/{filename}.md`. Ready for `/cdd:act {filename}` execution."
+4. Provide confidence score based on requirement clarity and plan specificity

@@ -1,140 +1,128 @@
-# Action: Perform Deep Diagnosis and Systemic Debugging
+# Action: Find Root Cause and Fix
 
 ## OBJECTIVE:
 
-To not just fix the provided error, but to understand its root cause at the deepest level. This command initiates a comprehensive "post-mortem" analysis to ensure that we not only solve the immediate problem but also extract valuable lessons to make the entire system more robust for the future.
+Find the root cause of the error through deep analysis and practical investigation. Focus on understanding why things broke and implementing real fixes.
 
 ---
 
-### STAGE 1: IMMEDIATE CONTEXT & PROBLEM INGESTION
+### STEP 1: GATHER FULL CONTEXT
 
-1.  **MANDATORY: Load Full Project Context:** Read `.claude/VISION.md`, `CLAUDE.md`, and the full `.claude/LOG.md` to understand the project's state leading up to the error.
-2.  **Analyze Error Message:** Deeply analyze the user-provided error message and stack trace: `$ARGUMENTS`.
+**MANDATORY ACTIONS:**
+1. **Load project context:** Read `.claude/VISION.md`, `CLAUDE.md`, and recent entries in `.claude/LOG.md`
+2. **Analyze the error:** Examine the error message/stack trace: `$ARGUMENTS`
+3. **MANDATORY: Explore related code:**
+   - Read ALL files mentioned in the error
+   - Search for similar functionality that might be affected
+   - Check recent changes to these areas
+   - Look for patterns in how this code is used elsewhere
 
 ---
 
-### STAGE 2: STRUCTURED ROOT CAUSE ANALYSIS
+### STEP 2: DEEP REFLECTION AND THEORIZATION
 
-Perform systematic debugging by answering these specific questions:
+**Deeply reflect upon all findings and think about why this isn't working.**
 
-#### **A. ERROR CLASSIFICATION**
-1. **What type of error is this?**
-   - [ ] Syntax/compile error (missing imports, typos)
-   - [ ] Runtime error (NoneType, KeyError, etc.)  
-   - [ ] Logic error (wrong behavior, incorrect calculations)
-   - [ ] Integration error (API calls, database connections)
-   - [ ] Configuration error (environment, settings)
+Generate 4-6 different possible sources of the problem:
+- Consider immediate causes (what directly failed)
+- Consider upstream causes (what led to the failure state)
+- Consider design issues (wrong assumptions or patterns)
+- Consider integration issues (how components interact)
+- Consider data/state issues (unexpected inputs or states)
+- Consider timing/order issues (race conditions, initialization)
 
-#### **B. IMMEDIATE CAUSE ANALYSIS**
-2. **What exactly failed?**
-   - Specific line/function that threw the error
-   - Expected vs actual behavior
-   - Input values that triggered the failure
-
-3. **Why did this specific line fail?**
-   - What assumption was violated?
-   - What precondition was missing?
-   - What data was unexpected?
-
-#### **C. DEEPER INVESTIGATION**
-4. **How did we get to this state?**
-   - Trace backwards from error to origin
-   - Check recent changes in `.claude/LOG.md`
-   - Review implementation against original plan
-
-5. **What systemic patterns emerge?**
-   - Is this similar to previous issues?
-   - Does this violate CLAUDE.md rules?
-   - Does this conflict with VISION.md principles?
-
-#### **D. ROOT CAUSE SYNTHESIS**
-Combine findings into a clear theory:
+**Present your analysis:**
 ```
-**ROOT CAUSE THEORY:**
-- **Immediate cause:** [what specific thing failed]
-- **Contributing factors:** [what conditions enabled this]  
-- **Systemic issue:** [broader pattern or design flaw]
-- **Prevention strategy:** [how to prevent this category of error]
+**INITIAL THEORIES:**
+1. [Theory 1]: [Specific explanation with evidence from code]
+2. [Theory 2]: [Specific explanation with evidence from code]
+3. [Theory 3]: [Specific explanation with evidence from code]
+4. [Theory 4]: [Specific explanation with evidence from code]
+(continue as needed...)
+
+**DEEP REASONING:**
+[Reason through each theory, examining evidence and likelihood]
+
+**MOST PROBABLE CAUSES:**
+After deep analysis, the 1-2 most likely root causes are:
+1. [Primary root cause with strong evidence]
+2. [Secondary possibility if relevant]
 ```
 
 ---
 
-### STAGE 3: MULTI-LAYERED SOLUTION
+### STEP 3: PROPOSE PRACTICAL FIX
 
-Present a 3-level solution using this structured format:
+Based on the root cause analysis, present a concrete solution:
 
 ```
-**DEBUG SOLUTION PROPOSAL**
+**PROBLEM:** [What's actually broken - be specific]
 
-**ERROR:** [One sentence describing the specific error]
+**ROOT CAUSE:** [The fundamental reason this happened]
 
-**LEVEL 1: IMMEDIATE FIX** ⚡
-- **What:** [Specific code change to stop the crash]
-- **Where:** [Exact file and line/function]
-- **Action:** [Precise description of the fix]
+**EVIDENCE FROM CODE:**
+- [Specific code snippets or patterns that prove this]
+- [Related code that shows why this assumption failed]
 
-**LEVEL 2: ROOT CAUSE FIX** 🔧  
-- **Root Cause:** [The underlying reason this happened]
-- **What:** [Changes to prevent this category of error]
-- **Where:** [Files/functions to modify for systemic fix]
-- **Action:** [Precise description of the structural changes]
+**FIX:** 
+- [Exact code changes needed]
+- [Specific files and line numbers]
+- [Any validation or error handling to add]
 
-**LEVEL 3: PREVENTION LESSON** 🛡️
-- **Pattern:** [What type of error this represents]
-- **Lesson:** [Rule to prevent similar issues in future]
-- **Action:** [Log specific lesson to help future planning]
+**PRACTICAL EXAMPLE:**
+[Show before/after code snippets demonstrating the fix]
 
-**Reply with "Proceed" to apply all three levels.**
+**HOW TO PREVENT THIS:**
+[One clear rule based on this specific case]
+
+Reply with "Proceed" to apply the fix.
 ```
 
-**SOLUTION EXAMPLES:**
+**EXAMPLE ANALYSIS:**
 
-**Runtime Error Example:**
-- Level 1: Add null check (`if user is not None:`)
-- Level 2: Modify function to raise exception instead of returning None
-- Level 3: "Always validate that dependencies cannot return None"
+```
+**PROBLEM:** API endpoint returns 500 error when user has no profile
 
-**Logic Error Example:**  
-- Level 1: Fix the calculation in the specific function
-- Level 2: Add input validation to prevent invalid states
-- Level 3: "Add validation steps to all user input processing"
+**ROOT CAUSE:** Code assumes user.profile always exists, but new users don't have profiles yet
 
-**Integration Error Example:**
-- Level 1: Add try/catch around the API call
-- Level 2: Implement proper retry and timeout logic
-- Level 3: "All external service calls need error handling and fallbacks"
+**EVIDENCE FROM CODE:**
+- Line 45 in handlers/user.py: `data = user.profile.to_dict()` 
+- No null check before accessing profile
+- User model shows profile is optional: `profile = relationship("Profile", nullable=True)`
+
+**FIX:**
+- Add null check in handlers/user.py line 45:
+  ```python
+  if user.profile:
+      data = user.profile.to_dict()
+  else:
+      data = {"message": "Profile not created yet"}
+  ```
+
+**HOW TO PREVENT THIS:**
+Never assume optional relationships exist - always check first
+```
 
 ---
 
-### STAGE 4: APPLY FIXES AND LOG LESSON
+### STEP 4: APPLY FIX AND LOG LESSON
 
-**ONLY AFTER RECEIVING "Proceed" CONFIRMATION:**
+After user confirms:
 
-#### **A. APPLY CODE FIXES**
-1. **Level 1 Fix:** Apply immediate fix to stop the error
-2. **Level 2 Fix:** Apply root cause fix for systemic improvement  
-3. **Submit Changes:** Present all file changes for user review
-
-#### **B. LOG THE LESSON** 
-Add structured entry to `.claude/LOG.md`:
+1. **Apply the fix** - Make the code changes
+2. **Verify it works** - Test that the error is resolved
+3. **Check for similar issues** - Search for the same pattern elsewhere
+4. **Log the lesson** in `.claude/LOG.md`:
 
 ```
 ---
 ## LESSON LEARNED: [YYYY-MM-DD HH:MM:SS]
-**Error Type:** [Runtime/Logic/Integration/etc.]
-**Problem:** [Brief description of what went wrong]
-**Root Cause:** [Underlying reason for the failure]
-**Solution:** [What was changed to fix it]
-**Prevention Rule:** [Specific rule to prevent similar issues]
+**Problem:** [Specific issue that occurred]
+**Root Cause:** [Why it happened]
+**Fix Applied:** [What we changed]
+**Code Pattern Fixed:** [The problematic pattern we corrected]
+**Prevention Rule:** [Simple rule to avoid this]
+**Similar Code Checked:** [Other files we verified]
 **Files Changed:** [List of modified files]
 ---
 ```
-
-#### **C. FINAL CONFIRMATION**
-"🐛 Debug complete. Error fixed at multiple levels and lesson logged for future prevention."
-
-**VALIDATION:**
-- [ ] Immediate error is resolved
-- [ ] Root cause is addressed  
-- [ ] Lesson is logged in structured format
-- [ ] User can continue with development
