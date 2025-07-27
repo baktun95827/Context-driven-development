@@ -76,6 +76,8 @@ If task is too vague (like "make the app better"), immediately ask clarifying qu
 - [ ] **Error handling:** How should failures be handled?
 - [ ] **UI/UX:** What does the user interaction look like?
 - [ ] **Configuration:** What should be configurable vs hard-coded?
+- [ ] **Technologies:** Are unfamiliar libraries/frameworks mentioned?
+- [ ] **Documentation:** Do we need examples or docs for mentioned tools?
 
 **CLARIFICATION QUESTIONS BY TASK TYPE:**
 
@@ -107,15 +109,110 @@ If task is too vague (like "make the app better"), immediately ask clarifying qu
 - Error response codes to handle?
 - Documentation format required?
 
+**For unfamiliar libraries/frameworks:**
+```
+**KNOWLEDGE REQUEST NEEDED:**
+The task mentions [library/framework name] which I need more information about.
+
+**Please provide:**
+- Documentation link: [URL to official docs or tutorial]
+- Usage examples: [How you want this used in your project]  
+- Integration approach: [How it connects to existing code]
+- Specific features: [Which features/methods to use]
+- Alternative options: [Other libraries you'd consider]
+
+**OR**
+- Should I research this library and propose implementation options?
+- Would you like me to suggest alternatives I'm familiar with?
+```
+
+**For vague technology requirements:**
+```
+**TECHNICAL CLARIFICATION NEEDED:**
+Your request mentions [vague technology reference].
+
+**Please choose your preferred approach:**
+
+**Option A:** [Specific tech stack interpretation]
+- Technologies: [Exact libraries/frameworks]
+- Implementation: [How they work together]
+- Complexity: [Low/Medium/High]
+- Time: [Estimate]
+
+**Option B:** [Alternative tech stack interpretation]
+- Technologies: [Different libraries/frameworks]
+- Implementation: [How they work together]
+- Complexity: [Low/Medium/High]  
+- Time: [Estimate]
+
+**OR provide missing details:**
+- Preferred tech stack or frameworks?
+- Performance/scalability requirements?
+- Integration constraints?
+```
+
+**KNOWLEDGE GAP CHECK:**
+Before confirming requirements, check if additional information is needed:
+
+**If unfamiliar libraries/frameworks are mentioned in the task:**
+```
+**ADDITIONAL INFORMATION NEEDED:**
+I need more details about [library/framework name] to create an accurate plan.
+
+**Please provide:**
+- Documentation link: [URL to official docs or tutorial you want to follow]
+- Usage examples: [Show how this library should be used in your project]
+- Integration approach: [How it connects to existing code/architecture] 
+- Specific features: [Which features/methods you want to use]
+- Alternative options: [Are there other libraries you'd consider?]
+
+**OR if you prefer:**
+- Should I research this library and propose implementation options?
+- Would you like me to suggest alternative approaches I'm familiar with?
+```
+
+**If implementation approach needs clarification:**
+```
+**TECHNICAL APPROACH CLARIFICATION:**
+The requirements could be implemented in multiple ways.
+
+**Please choose your preferred approach:**
+
+**Option A:** [Specific implementation approach]
+- What this means: [Clear explanation]
+- Technologies used: [Specific tools/libraries]
+- Architecture: [How components connect]
+- Complexity: [Low/Medium/High]
+- Time estimate: [Hours/days]
+
+**Option B:** [Alternative implementation approach]
+- What this means: [Clear explanation]
+- Technologies used: [Different tools/libraries]
+- Architecture: [How components connect]
+- Complexity: [Low/Medium/High]
+- Time estimate: [Hours/days]
+
+**OR provide missing details:**
+- [Specific technical question]
+- [Architecture decision needed]
+- [Integration requirement unclear]
+```
+
 **REQUIREMENT CONFIRMATION:**
-Before proceeding, confirm understanding:
+Only after all clarifications, confirm understanding:
 ```
 **CLARIFIED REQUIREMENTS:**
-- [Specific requirement 1 based on user answers]
-- [Specific requirement 2 based on user answers]
-- [Specific requirement 3 based on user answers]
+- [Specific requirement 1 with technical details]
+- [Specific requirement 2 with implementation approach]
+- [Specific requirement 3 with integration points]
 
-Is this understanding correct? Any additional requirements or corrections?
+**CONFIRMED TECHNICAL APPROACH:**
+- Libraries/frameworks: [Specific tools to use]
+- Architecture pattern: [Design approach]
+- Integration points: [How it connects to existing system]
+- Documentation provided: [Links/examples received]
+
+Is this understanding complete? Any additional requirements or corrections?
 ```
 
 ---

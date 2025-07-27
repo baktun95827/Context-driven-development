@@ -48,13 +48,117 @@ Analyze the user prompt and classify it into one of two clear modes:
 - Concerns: "This seems complex", "I'm worried about..."
 - Observations: "This plan feels...", "The approach looks..."
 
-**EXAMPLES:**
-- ✅ "Is creating a separate database file really necessary?"
-- ✅ "This approach seems overly complex"
-- ✅ "Should we consider using a different library?"
-- ✅ "What about performance implications?"
-
 **ACTION:** Proceed to **STEP 2B: CONSULTATIVE ANALYSIS**.
+
+#### **MODE C: UNCLEAR INTENT - REQUIRE CLARIFICATION**
+
+**ALWAYS clarify when ANY of these conditions exist:**
+
+**1. Vague requests:** "Fix this", "Make it better", "Update the plan"
+**2. Missing details:** "Add error handling" (which errors? what handling?)
+**3. Unclear scope:** "Change the database" (to what? why? how?)
+**4. Unknown libraries:** References to unfamiliar packages/frameworks
+
+**CLEAR CLARIFICATION PROCESS:**
+
+Always provide **specific options** for users to choose from:
+
+```
+**CLARIFICATION NEEDED:**
+Your request "[user's request]" could mean several things.
+
+**Please choose the option that matches your intent:**
+
+**Option A:** [Specific interpretation with implementation details]
+- What this means: [Clear explanation]
+- What changes: [Exact steps affected]
+- Time impact: [Estimate]
+
+**Option B:** [Alternative interpretation with implementation details]  
+- What this means: [Clear explanation]
+- What changes: [Exact steps affected]
+- Time impact: [Estimate]
+
+**Option C:** [Third interpretation if applicable]
+- What this means: [Clear explanation]
+- What changes: [Exact steps affected]
+- Time impact: [Estimate]
+
+**OR provide missing information:**
+- [Specific info needed]: [Format/examples expected]
+- [Required details]: [What to specify]
+
+**If unfamiliar library/framework mentioned:**
+Please provide documentation links or usage examples for [library name] so I can make accurate plan revisions.
+```
+
+**EXAMPLES OF CLEAR OPTION-BASED CLARIFICATION:**
+
+For "Add error handling":
+```
+**Please choose how you want error handling added:**
+
+**Option A: Basic try/catch blocks**
+- Add try/catch around database operations
+- Log errors and return generic error messages
+- Changes: Add error handling to 3 database steps
+- Time: +30 minutes
+
+**Option B: Comprehensive error handling**
+- Custom exception classes for different error types
+- Detailed error logging with context
+- User-friendly error messages with recovery suggestions
+- Changes: Modify 8 steps, add 4 new error handling steps
+- Time: +2 hours
+
+**Option C: Defensive programming approach**
+- Input validation to prevent errors
+- Graceful degradation when services fail
+- Retry logic for transient failures
+- Changes: Modify 12 steps, add 6 validation steps
+- Time: +3 hours
+
+Which approach fits your needs?
+```
+
+For "Change to PostgreSQL":
+```
+**Please choose your PostgreSQL migration approach:**
+
+**Option A: Direct replacement**
+- Replace SQLite with PostgreSQL in existing steps
+- Keep current schema and queries unchanged
+- Changes: Modify 4 database setup steps
+- Time: +1 hour
+
+**Option B: Schema optimization**
+- Migrate to PostgreSQL with improved schema design
+- Add proper indexes, constraints, and relationships
+- Optimize queries for PostgreSQL performance
+- Changes: Rewrite 8 database steps, add 5 optimization steps
+- Time: +4 hours
+
+**OR provide these missing details:**
+- Why PostgreSQL over SQLite? (performance, features, scaling requirements?)
+- Migration approach needed? (zero-downtime, maintenance window acceptable?)
+- Existing data handling? (migrate existing data, start fresh?)
+```
+
+For unfamiliar library (e.g., "Use Pydantic models"):
+```
+**KNOWLEDGE REQUEST:**
+I need more information about Pydantic usage in your project.
+
+**Please provide:**
+- Documentation link: [URL to Pydantic docs or tutorial you want to follow]
+- Code example: [Show how Pydantic models should look in your codebase]
+- Integration points: [How models connect to existing database/API code]
+- Specific features: [validation rules, serialization, custom validators, etc.]
+
+This will help me create accurate plan revisions with proper Pydantic implementation.
+```
+
+**ACTION:** Wait for user selection or missing information before proceeding.
 
 ---
 
