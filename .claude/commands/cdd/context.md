@@ -1,93 +1,139 @@
-# Action: Generate Project Context Snapshot
+# Action: Generate Project Foundation Context
 
 ## OBJECTIVE:
-Provide a quick, comprehensive overview of current project state to help with context transitions and session resumption.
+Provide a comprehensive overview of the project's foundational structure, architecture, and patterns to prepare for any kind of future work.
 
-**SUCCESS CRITERIA:** Clear snapshot that allows instant project understanding without reading multiple files.
-
----
-
-### STEP 1: GATHER CURRENT STATE
-
-**COLLECT KEY INFORMATION:**
-- [ ] Read `.claude/VISION.md` for project goals
-- [ ] Read `CLAUDE.md` for technical rules
-- [ ] Scan `.claude/LOG.md` for recent activity (last 5 entries)
-- [ ] Check `.claude/cddtasks/` directory for active/pending tasks
-- [ ] Identify recently modified files (git status if available)
+**SUCCESS CRITERIA:** Clear understanding of project foundations that enables informed decision-making for any new development task.
 
 ---
 
-### STEP 2: GENERATE CONTEXT SNAPSHOT
+### STEP 1: GATHER FOUNDATIONAL INFORMATION
+
+**COLLECT CORE PROJECT KNOWLEDGE:**
+- [ ] Read `.claude/VISION.md` for project mission and principles
+- [ ] Read `CLAUDE.md` for technical architecture and patterns
+- [ ] Analyze `.claude/LOG.md` for established patterns and lessons learned
+- [ ] Examine project structure and organization
+- [ ] Identify key technologies, frameworks, and dependencies
+- [ ] Understand core business domain and concepts
+- [ ] Review existing capabilities and modules
+
+---
+
+### STEP 2: GENERATE FOUNDATION CONTEXT
 
 **Present information using this standardized format:**
 
 ```markdown
-# PROJECT CONTEXT SNAPSHOT
+# PROJECT FOUNDATION CONTEXT
 **Generated:** [YYYY-MM-DD HH:MM:SS]
 
-## 🎯 PROJECT MISSION
-[One sentence from VISION.md describing what we're building]
+## 🎯 PROJECT MISSION & DOMAIN
+[Project's core purpose and business domain from VISION.md]
 
-## 📋 CURRENT TASKS
-**Active Task:** [current task file being worked on, if any]
-**Pending Tasks:** [list of .claude/cddtasks/ files that haven't been started]
-**Completed Recently:** [last 2 completed tasks from LOG.md]
+## 🏗️ ARCHITECTURE & STRUCTURE
+**Project Type:** [Web app, CLI tool, library, service, etc.]
+**Tech Stack:** [Primary languages, frameworks, databases]
+**Architecture Pattern:** [MVC, microservices, layered, etc.]
+**Key Dependencies:** [Major libraries and frameworks used]
 
-## 📂 KEY FILES TO KNOW
-**Core Documents:**
-- `.claude/VISION.md` - Project goals and principles
-- `CLAUDE.md` - Technical rules and patterns
-- `.claude/LOG.md` - Project history and lessons
+## 📁 PROJECT ORGANIZATION
+**Directory Structure:**
+```
+project/
+├── [key directories and their purposes]
+├── [core modules and what they handle]
+└── [important configuration files]
+```
 
-**Implementation Files:**
-[List 5-8 most important/recently changed files with brief descriptions]
+**Core Modules:**
+- [Module 1]: [Purpose and responsibilities]
+- [Module 2]: [Purpose and responsibilities]
+- [Module 3]: [Purpose and responsibilities]
 
-## 🔄 RECENT ACTIVITY
-[Last 3 entries from LOG.md - completed tasks, lessons learned, etc.]
+## 🔧 DEVELOPMENT PATTERNS & CONVENTIONS
+**From CLAUDE.md and established practices:**
+- **Code Style:** [Formatting, naming conventions]
+- **Architecture Rules:** [Design patterns followed]
+- **Testing Approach:** [Testing strategy and frameworks]
+- **Error Handling:** [How errors are managed]
+- **Data Management:** [Database patterns, data flow]
 
-## ⚠️ CURRENT FOCUS
-[One line describing what phase the project is in or what should be worked on next]
+## 💡 ESTABLISHED PATTERNS & LESSONS
+**From LOG.md analysis - recurring patterns that work:**
+- **[Pattern Type 1]:** [What works well in this project]
+- **[Pattern Type 2]:** [Established successful approaches]
+- **[Pattern Type 3]:** [Key lessons learned and applied]
 
-## 💡 KEY PATTERNS & RULES
-[2-3 most important rules from CLAUDE.md that affect daily development]
+## 🔍 DOMAIN CONCEPTS & ENTITIES
+**Core business concepts this project deals with:**
+- [Entity/Concept 1]: [What it represents and key attributes]
+- [Entity/Concept 2]: [What it represents and key attributes]
+- [Entity/Concept 3]: [What it represents and key attributes]
+
+## ⚙️ AVAILABLE CAPABILITIES
+**What the project can currently do:**
+- [Capability 1]: [Brief description]
+- [Capability 2]: [Brief description]
+- [Capability 3]: [Brief description]
+
+## 📋 TECHNICAL CONSTRAINTS & REQUIREMENTS
+**Important limitations and requirements to remember:**
+- [Constraint 1]: [Why it matters]
+- [Constraint 2]: [Why it matters]
+- [Performance Requirements]: [If any specific needs]
+- [Compatibility Requirements]: [If any specific needs]
 ```
 
 ---
 
-### STEP 3: PROVIDE NEXT-STEP GUIDANCE
+### STEP 3: PROVIDE STRATEGIC GUIDANCE
 
-**End with actionable guidance:**
+**End with strategic insights:**
 
 ```markdown
-## 🚀 RECOMMENDED NEXT ACTIONS
-[Based on current state, suggest specific next steps like:]
-- "Continue with `/cdd:act .claude/cddtasks/003_...md` to finish authentication"
-- "Run `/cdd:plan .claude/cddtasks/004_...md` to plan the dashboard feature"  
-- "Use `/cdd:debug [error]` to resolve the failing tests"
-- "Start new work with `/cdd:start [description]`"
+## 🧭 STRATEGIC CONTEXT FOR FUTURE WORK
+
+**PROJECT MATURITY:** [Early stage, growing, established, mature]
+
+**CURRENT CAPABILITIES:** 
+[What the project can handle well now]
+
+**ARCHITECTURAL READINESS:**
+[What kinds of changes the current architecture supports easily]
+
+**COMMON TASK PATTERNS:**
+[Based on LOG.md, what types of work are frequently needed]
+
+**INTEGRATION POINTS:**
+[Where new features typically need to connect]
+
+**TECHNICAL DEBT AREAS:**
+[Known areas that may need attention in future work]
 ```
 
-**EFFICIENCY NOTES:**
-- Keep descriptions brief but informative
-- Focus on actionable insights, not exhaustive details
-- Highlight blockers or urgent items
-- Include confidence level: "High confidence in next steps" vs "Needs strategic decision"
+**GUIDANCE PRINCIPLES:**
+- Focus on foundational understanding over current status
+- Emphasize architecture and patterns over specific features
+- Highlight constraints and capabilities that affect future decisions
+- Provide context for informed architectural choices
 
 ---
 
 ### USAGE SCENARIOS
 
 **When to use `/cdd:context`:**
-- ✅ Starting a new development session
-- ✅ After taking a break from the project
-- ✅ When feeling lost about current state
-- ✅ Before making major architectural decisions
-- ✅ When onboarding new team members
+- ✅ Starting work on an unfamiliar project
+- ✅ Before planning major new features
+- ✅ When making architectural decisions
+- ✅ Onboarding new team members to the project
+- ✅ After breaks to refresh project understanding
+- ✅ Before proposing technical changes
 
 **Output should help answer:**
-- "What is this project trying to achieve?"
-- "What work is currently in progress?"
-- "What should I work on next?"
-- "What are the key constraints and patterns?"
-- "What has been learned recently?"
+- "What kind of project is this and how is it structured?"
+- "What patterns and conventions should I follow?"
+- "What capabilities already exist that I can build on?"
+- "What are the key constraints I need to work within?"
+- "How should new features integrate with existing architecture?"
+- "What technical approaches align with this project's patterns?"
