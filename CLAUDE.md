@@ -36,11 +36,11 @@ The framework implements a three-layer memory architecture:
 ### CDD Framework Commands
 The framework provides these specialized commands for managing development workflows:
 
-- `/cdd:start <task_description>` - Initialize new tasks with auto-numbered files
-- `/cdd:plan <task_file>` - Generate collaborative implementation plans through strategic dialogue
+- `/cdd:plan <task_description>` - Create task file and generate detailed implementation plans through requirement clarification
 - `/cdd:act <task_file>` - Execute complete plans atomically with full context loading
 - `/cdd:revise <task_file> <changes>` - Modify plans with systemic impact analysis
 - `/cdd:debug <error_message>` - Perform root cause analysis and log lessons learned
+- `/cdd:context` - Generate foundational project understanding for informed decision-making
 - `/cdd:evolve` - Update core project rules based on accumulated experience
 
 ## Command Execution Patterns
@@ -100,7 +100,7 @@ All new logic must be introduced via failing tests first. This is enforced by th
 
 **For New Feature Development:**
 ```
-/cdd:start → /cdd:plan → /cdd:act → [/cdd:revise if needed] → completion
+/cdd:plan → /cdd:act → [/cdd:revise if needed] → completion
 ```
 
 **For Bug Fixes:**
@@ -110,44 +110,44 @@ All new logic must be introduced via failing tests first. This is enforced by th
 
 **For Project Understanding:**
 ```
-/cdd:context → analyze output → proceed with appropriate workflow
+/cdd:context → analyze foundational structure → proceed with informed planning
 ```
 
 ### Detailed Command Usage Scenarios
 
-#### `/cdd:context` - Project State Management
+#### `/cdd:context` - Project Foundation Understanding
 **Use when:**
-- Starting a new development session after a break
-- Feeling lost about current project state
-- Need to understand what's been done recently
+- Starting work on an unfamiliar project
+- Before planning major new features
+- When making architectural decisions
 - Onboarding team members to the project
+- After breaks to refresh project understanding
 
 **Output helps with:**
-- Understanding current active tasks
-- Seeing recent completed work and lessons learned
-- Identifying next logical steps
-- Getting quick project overview without reading multiple files
+- Understanding project architecture and structure
+- Learning established patterns and conventions
+- Identifying available capabilities and constraints
+- Getting foundational knowledge for informed decision-making
 
-#### `/cdd:start` - Task Initialization
+#### `/cdd:plan` - Task Creation and Strategic Planning
 **Use for:**
-- ✅ "Implement sorting algorithm for large datasets"
-- ✅ "Add input validation to data parser"  
+- ✅ "Implement user authentication with JWT tokens"
+- ✅ "Add email validation to user registration"  
 - ✅ "Create configuration management system"
 - ✅ "Fix memory leak in processing pipeline"
 - ✅ "Setup automated testing framework"
-- ✅ "Implement caching layer for expensive operations"
 
 **Avoid for:**
 - ❌ "Make the code better" (too vague)
 - ❌ "Add logging and fix bugs and write tests" (multiple tasks)
 - ❌ "Write sortArray() method in utils.py" (too prescriptive about HOW)
 
-#### `/cdd:plan` - Strategic Planning
 **Best for:**
 - Complex features requiring architectural decisions
 - Features that touch multiple parts of the system
 - When multiple technical approaches are possible
 - Features that need integration planning
+- Any task requiring detailed implementation planning
 
 **Planning scenarios - adapt these examples to your domain:**
 - **Data structures** - Choose representations, storage formats, access patterns
@@ -207,34 +207,34 @@ All new logic must be introduced via failing tests first. This is enforced by th
 
 #### Feature Development (any domain)
 ```
-1. /cdd:start "Implement [domain-specific feature]"
-2. /cdd:plan → discovers existing patterns, proposes technical approach
-3. /cdd:act → implements core logic, supporting code, tests atomically
-4. Pattern learned: feature tasks need core implementation + supporting files + validation
+1. /cdd:plan "Implement [domain-specific feature]"
+   → creates task file, clarifies requirements, discovers existing patterns, generates detailed plan
+2. /cdd:act → implements core logic, supporting code, tests atomically
+3. Pattern learned: feature tasks need core implementation + supporting files + validation
 ```
 
 #### Data Processing Tasks
 ```
-1. /cdd:start "Process [data type] with [transformation]"
-2. /cdd:plan → considers input/output formats, processing strategies
-3. /cdd:act → implements processing logic, input validation, output generation
-4. Pattern learned: data tasks need parsing + processing + validation + output
+1. /cdd:plan "Process [data type] with [transformation]"
+   → creates task file, considers input/output formats, processing strategies, generates plan
+2. /cdd:act → implements processing logic, input validation, output generation
+3. Pattern learned: data tasks need parsing + processing + validation + output
 ```
 
 #### Algorithm Implementation
 ```
-1. /cdd:start "Implement [algorithm name] for [problem]"
-2. /cdd:plan → considers time/space complexity, edge cases, testing approach
-3. /cdd:act → implements algorithm, handles edge cases, adds comprehensive tests
-4. Pattern learned: algorithm tasks need core logic + edge case handling + performance tests
+1. /cdd:plan "Implement [algorithm name] for [problem]"
+   → creates task file, considers time/space complexity, edge cases, testing approach
+2. /cdd:act → implements algorithm, handles edge cases, adds comprehensive tests
+3. Pattern learned: algorithm tasks need core logic + edge case handling + performance tests
 ```
 
 #### Configuration/Setup Tasks
 ```
-1. /cdd:start "Setup [tool/environment] for [purpose]"
-2. /cdd:plan → considers environment requirements, configuration options
-3. /cdd:act → creates configuration files, setup scripts, documentation
-4. Pattern learned: setup tasks need configuration + automation + documentation
+1. /cdd:plan "Setup [tool/environment] for [purpose]"
+   → creates task file, considers environment requirements, configuration options
+2. /cdd:act → creates configuration files, setup scripts, documentation
+3. Pattern learned: setup tasks need configuration + automation + documentation
 ```
 
 #### Bug Fixes (universal)
@@ -248,7 +248,7 @@ All new logic must be introduced via failing tests first. This is enforced by th
 ### Efficiency Best Practices
 
 #### Context Management
-- Use `/cdd:context` at start of each session
+- Use `/cdd:context` to understand project foundations before major work
 - Let commands batch-read related files automatically
 - Follow suggested file patterns for your task type
 

@@ -43,19 +43,18 @@ The framework provides these specialized commands for managing development workf
 
 ### Core Commands
 
-- **`/cdd:start <task_description>`** - Initialize new tasks with auto-numbered files
-- **`/cdd:plan <task_file>`** - Generate collaborative implementation plans through strategic dialogue
+- **`/cdd:plan <task_description>`** - Create task file and generate detailed implementation plans through requirement clarification
 - **`/cdd:act <task_file>`** - Execute complete plans atomically with full context loading
 - **`/cdd:revise <task_file> <changes>`** - Modify plans with systemic impact analysis
 - **`/cdd:debug <error_message>`** - Perform root cause analysis and log lessons learned
-- **`/cdd:context`** - Generate comprehensive project state snapshot
+- **`/cdd:context`** - Generate foundational project understanding for informed decision-making
 - **`/cdd:evolve`** - Update core project rules based on accumulated experience
 
 ## Command Workflows
 
 ### For New Feature Development
 ```
-/cdd:start → /cdd:plan → /cdd:act → [/cdd:revise if needed] → completion
+/cdd:plan → /cdd:act → [/cdd:revise if needed] → completion
 ```
 
 ### For Bug Fixes
@@ -65,12 +64,14 @@ The framework provides these specialized commands for managing development workf
 
 ### For Project Understanding
 ```
-/cdd:context → analyze output → proceed with appropriate workflow
+/cdd:context → analyze foundational structure → proceed with informed planning
 ```
 
 ## Command Usage Examples
 
-### `/cdd:start` - Task Initialization
+### `/cdd:plan` - Task Creation and Strategic Planning
+Creates task files and generates detailed implementation plans through requirement clarification. Best for complex features requiring architectural decisions, multiple technical approaches, or integration planning.
+
 **Good Examples:**
 - ✅ "Implement user authentication with JWT tokens"
 - ✅ "Add email validation to user registration"  
@@ -81,9 +82,6 @@ The framework provides these specialized commands for managing development workf
 - ❌ "Make the code better" (too vague)
 - ❌ "Add logging and fix bugs and write tests" (multiple tasks)
 - ❌ "Write sortArray() method in utils.py" (too prescriptive about HOW)
-
-### `/cdd:plan` - Strategic Planning
-Best for complex features requiring architectural decisions, multiple technical approaches, or integration planning. Engages in structured dialogue to resolve strategic decisions before implementation.
 
 ### `/cdd:act` - Execution Engine
 Executes plans atomically - either all steps complete successfully or no permanent changes are made. Includes comprehensive context loading and sanity checks.
@@ -99,8 +97,8 @@ Three-level solution approach:
 2. **Root cause fix** - Prevent this category of error systemically  
 3. **Prevention lesson** - Update practices to avoid similar issues
 
-### `/cdd:context` - Project State Management
-Use when starting new sessions, feeling lost about current state, or needing quick project overview.
+### `/cdd:context` - Project Foundation Understanding
+Use when starting work on unfamiliar projects, before planning major features, or when making architectural decisions. Provides foundational project knowledge for informed decision-making.
 
 ### `/cdd:evolve` - System Learning
 Run periodically to update CLAUDE.md based on accumulated lessons and refine development practices.
@@ -109,23 +107,23 @@ Run periodically to update CLAUDE.md based on accumulated lessons and refine dev
 
 ### Feature Development (any domain)
 ```
-1. /cdd:start "Implement [domain-specific feature]"
-2. /cdd:plan → discovers existing patterns, proposes technical approach
-3. /cdd:act → implements core logic, supporting code, tests atomically
+1. /cdd:plan "Implement [domain-specific feature]"
+   → creates task file, discovers existing patterns, proposes technical approach
+2. /cdd:act → implements core logic, supporting code, tests atomically
 ```
 
 ### Algorithm Implementation
 ```
-1. /cdd:start "Implement [algorithm name] for [problem]"
-2. /cdd:plan → considers time/space complexity, edge cases, testing approach
-3. /cdd:act → implements algorithm, handles edge cases, adds comprehensive tests
+1. /cdd:plan "Implement [algorithm name] for [problem]"
+   → creates task file, considers time/space complexity, edge cases, testing approach
+2. /cdd:act → implements algorithm, handles edge cases, adds comprehensive tests
 ```
 
 ### Configuration/Setup Tasks
 ```
-1. /cdd:start "Setup [tool/environment] for [purpose]"
-2. /cdd:plan → considers environment requirements, configuration options
-3. /cdd:act → creates configuration files, setup scripts, documentation
+1. /cdd:plan "Setup [tool/environment] for [purpose]"
+   → creates task file, considers environment requirements, configuration options
+2. /cdd:act → creates configuration files, setup scripts, documentation
 ```
 
 ## Key Principles
@@ -178,8 +176,9 @@ The `/cdd:plan` command implements collaborative architecture through structured
 
 1. **Define your Vision**: Create `.claude/VISION.md` with your project's mission and guiding principles
 2. **Establish Technical Rules**: Create `CLAUDE.md` with your technical stack, architecture patterns, and coding standards
-3. **Start your first task**: Use `/cdd:start "Your first feature description"`
-4. **Follow the workflows**: Use `/cdd:plan` to create implementation plans, then `/cdd:act` to execute them
+3. **Understand your project**: Use `/cdd:context` to get foundational project knowledge
+4. **Plan your first task**: Use `/cdd:plan "Your first feature description"` to create task file and implementation plan
+5. **Execute the plan**: Use `/cdd:act` to implement the feature atomically
 
 ## Framework Benefits
 
