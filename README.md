@@ -44,6 +44,7 @@ The framework provides these specialized commands for managing development workf
 ### Core Commands
 
 - **`/cdd:plan <task_description>`** - Create task file and generate detailed implementation plans through requirement clarification
+- **`/cdd:clarify <task_description>`** - Clarify requirements and execute simple changes directly without task files
 - **`/cdd:act <task_file>`** - Execute complete plans atomically with full context loading
 - **`/cdd:revise <task_file> <changes>`** - Modify plans with systemic impact analysis
 - **`/cdd:debug <error_message>`** - Perform root cause analysis and log lessons learned
@@ -60,6 +61,11 @@ The framework provides these specialized commands for managing development workf
 ### For Bug Fixes
 ```
 /cdd:debug → [/cdd:revise existing task] → /cdd:act → completion
+```
+
+### For Simple Changes
+```
+/cdd:clarify → adaptive clarification → direct implementation
 ```
 
 ### For Project Understanding
@@ -82,6 +88,26 @@ Creates task files and generates detailed implementation plans through requireme
 - ❌ "Make the code better" (too vague)
 - ❌ "Add logging and fix bugs and write tests" (multiple tasks)
 - ❌ "Write sortArray() method in utils.py" (too prescriptive about HOW)
+
+### `/cdd:clarify` - Simple Changes with Adaptive Clarification
+Handles straightforward changes through minimal clarification and direct execution - the lightweight alternative to `/cdd:plan`. Adapts questioning based on input detail level.
+
+**Good Examples:**
+- ✅ "Update the login error message to be more user-friendly"
+- ✅ "Add email validation to the registration form"
+- ✅ "Fix the timeout configuration in the API settings"
+- ✅ "Change the button color to match the design system"
+
+**Perfect for:**
+- Simple bug fixes with unclear scope
+- Minor UI/UX tweaks needing specification
+- Configuration changes with unclear parameters
+- Updates to existing functionality
+
+**Input Detail Examples:**
+- **Very detailed**: "Change error message in src/auth/login.js line 45..." → minimal clarification
+- **Medium detail**: "Add email validation to registration form" → 2-3 targeted questions
+- **Low detail**: "Fix the login issue" → multiple clarification questions
 
 ### `/cdd:act` - Execution Engine
 Executes plans atomically - either all steps complete successfully or no permanent changes are made. Includes comprehensive context loading and sanity checks.
@@ -171,6 +197,25 @@ The `/cdd:plan` command implements collaborative architecture through structured
 - Proof-of-concept development
 - Throwaway scripts or one-time tools
 - Quick experiments to test ideas
+
+### **Command Selection Guide**
+
+**Use `/cdd:plan` when:**
+- Complex features requiring architectural decisions
+- Multiple technical approaches possible
+- Integration planning needed
+- > 3 hours estimated work
+
+**Use `/cdd:clarify` when:**  
+- Simple changes with unclear details
+- < 3 hours estimated work
+- 1-5 files affected
+- Need quick clarification and implementation
+
+**Use direct interaction when:**
+- Requirements are completely clear
+- Single trivial change
+- Experimental/throwaway work
 
 ## Getting Started
 

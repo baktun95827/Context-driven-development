@@ -92,22 +92,107 @@ Unclear aspects: [list what needs clarification]
 
 **Step 2: Ask targeted questions (max 5)**
 
-**EFFICIENT CLARIFICATION TEMPLATES:**
+**CLARIFICATION DIALOGUE EXAMPLES:**
 
-**For vague requests:**
-- "What exactly is the current problematic behavior?"
-- "What should happen instead?"
-- "Which specific component/file is affected?"
-- "How will we know it's working correctly?"
+**SCENARIO 1: Vague Input**
+```
+User: "Fix the login issue"
 
-**For medium-detail requests:**
-- "Should this follow the existing [pattern] or work differently?"
-- "What should happen in [edge case scenario]?"
-- "Any specific [format/style/validation] requirements?"
+Claude: **REQUIREMENT ANALYSIS:**
+Input: "Fix the login issue"
+Detail level: Low
+Clear aspects: Something is wrong with login
+Unclear aspects: What's broken, where, expected behavior
 
-**For detailed requests:**
-- "Looks clear - just to confirm: [restate understanding]?"
-- Or skip to implementation if truly clear
+**CLARIFICATION QUESTIONS:**
+1. What exactly happens when you try to login? (error message, redirect, nothing?)
+2. Which login method is affected? (email/password, OAuth, all of them?)
+3. When did this start happening?
+4. What should happen in a successful login?
+
+User: "Users can't login with email/password, they get 'Login failed' but their credentials are correct"
+
+Claude: **FOLLOW-UP:**
+5. Where is this error coming from - the frontend validation or backend response?
+
+User: "Backend - it's rejecting valid passwords"
+
+Claude: **READY TO IMPLEMENT:**
+Change: Fix backend password validation logic
+Files: [backend auth files]
+Approach: Debug password comparison, likely hashing issue
+Duration: 30-60 minutes
+```
+
+**SCENARIO 2: Medium Detail Input**
+```
+User: "Add email validation to the registration form"
+
+Claude: **REQUIREMENT ANALYSIS:**
+Input: "Add email validation to the registration form"  
+Detail level: Medium
+Clear aspects: Email field needs validation on registration
+Unclear aspects: Validation rules, timing, error display
+
+**CLARIFICATION QUESTIONS:**
+1. Should validation happen on input blur, form submit, or both?
+2. What error message should show for invalid emails?
+3. Any specific email format requirements beyond standard email regex?
+
+User: "On blur would be good, message should say 'Please enter a valid email address'"
+
+Claude: **READY TO IMPLEMENT:**
+Change: Add email validation to registration form with blur trigger
+Files: [registration form component]
+Approach: Add blur event handler with email regex validation
+Duration: 15-20 minutes
+```
+
+**SCENARIO 3: Detailed Input (minimal clarification)**
+```
+User: "Change the error message in src/components/LoginForm.js line 47 from 'Invalid login' to 'Invalid email or password' and make it red like other error messages"
+
+Claude: **REQUIREMENT ANALYSIS:**
+Input: Very detailed with specific file, line, old text, new text, styling
+Detail level: High
+Clear aspects: Exact location, exact change, styling requirement
+Unclear aspects: None significant
+
+**MINIMAL CLARIFICATION:**
+Just to confirm - should this change affect only this one location or are there other places showing 'Invalid login'?
+
+User: "Just this one place"
+
+Claude: **READY TO IMPLEMENT:**
+Change: Update error message text and ensure red styling
+Files: src/components/LoginForm.js
+Approach: Direct text replacement, verify CSS class applied
+Duration: 5 minutes
+```
+
+**SCENARIO 4: Configuration Change**
+```
+User: "Update the API timeout in the config"
+
+Claude: **REQUIREMENT ANALYSIS:**
+Input: "Update the API timeout in the config"
+Detail level: Medium-Low  
+Clear aspects: API timeout needs changing
+Unclear aspects: Which config, current value, new value, scope
+
+**CLARIFICATION QUESTIONS:**
+1. Which config file? (main config, environment-specific?)
+2. What should the new timeout value be?
+3. Should this apply to all API calls or specific ones?
+
+User: "In config/api.js, change from 5000ms to 10000ms for all calls"
+
+Claude: **READY TO IMPLEMENT:**
+Change: Update API timeout from 5s to 10s
+Files: config/api.js
+Approach: Change timeout value in configuration object
+Duration: 2 minutes
+```
 
 **SMART DEFAULTS:**
 Use project patterns when details aren't specified:

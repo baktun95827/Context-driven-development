@@ -37,6 +37,7 @@ The framework implements a three-layer memory architecture:
 The framework provides these specialized commands for managing development workflows:
 
 - `/cdd:plan <task_description>` - Create task file and generate detailed implementation plans through requirement clarification
+- `/cdd:clarify <task_description>` - Clarify requirements and execute simple changes directly without task files
 - `/cdd:act <task_file>` - Execute complete plans atomically with full context loading
 - `/cdd:revise <task_file> <changes>` - Modify plans with systemic impact analysis
 - `/cdd:debug <error_message>` - Perform root cause analysis and log lessons learned
@@ -103,6 +104,11 @@ All new logic must be introduced via failing tests first. This is enforced by th
 /cdd:plan → /cdd:act → [/cdd:revise if needed] → completion
 ```
 
+**For Simple Changes:**
+```
+/cdd:clarify → adaptive clarification → direct implementation
+```
+
 **For Bug Fixes:**
 ```
 /cdd:debug → [/cdd:revise existing task] → /cdd:act → completion
@@ -156,6 +162,30 @@ All new logic must be introduced via failing tests first. This is enforced by th
 - **Integration points** - How components communicate, interfaces, protocols
 - **Error handling** - Recovery strategies, validation approaches, failure modes
 - **Performance considerations** - Time complexity, memory usage, bottlenecks
+
+#### `/cdd:clarify` - Simple Changes with Adaptive Clarification
+**Use for:**
+- ✅ "Update the login error message to be more user-friendly"
+- ✅ "Add email validation to the registration form"  
+- ✅ "Fix the timeout configuration in the API settings"
+- ✅ "Change the button color to match the design system"
+- ✅ "Remove the debug logging from production code"
+
+**Perfect for:**
+- Simple bug fixes with unclear scope
+- Minor UI/UX tweaks needing specification  
+- Configuration changes with unclear parameters
+- Updates to existing functionality
+- Quick improvements that need direction
+
+**Adaptive clarification based on input detail:**
+- **Very detailed input** (e.g., "Change error message in src/auth/login.js line 45...") → minimal clarification
+- **Medium detailed input** (e.g., "Add email validation to registration form") → 2-3 targeted questions  
+- **Low detailed input** (e.g., "Fix the login issue") → multiple clarification questions
+
+**Context loading:** Lightweight - reads only CLAUDE.md for technical patterns
+
+**Execution:** Direct implementation without task files, streamlined completion
 
 #### `/cdd:act` - Execution Engine
 **Use when:**
