@@ -53,162 +53,116 @@ Reasons: [explain why full planning would be better]
 
 ---
 
-### STAGE 3: REQUIREMENT CLARIFICATION (MANDATORY)
+### STAGE 3: ADAPTIVE CLARIFICATION
 
-**BEFORE IMPLEMENTATION:** Always identify and resolve all ambiguities in the user's requirements.
+**CLARIFICATION STRATEGY:** Ask only what's unclear, adapting to the detail level provided.
 
-**CLARIFICATION QUESTIONS BY CHANGE TYPE:**
+**INPUT DETAIL EXAMPLES:**
 
-**For "Fix bug in [component]":**
-
-- What exactly is the incorrect behavior?
-- What should the correct behavior be?
-- Are there specific scenarios where this happens?
-- Should we add validation to prevent this in the future?
-- How can we test that the fix works?
-
-**For "Update [UI element/message]":**
-
-- What exactly should the new text/appearance be?
-- Should this change affect similar elements elsewhere?
-- Are there specific user scenarios to consider?
-- Does this need to work across different screen sizes/browsers?
-- Should we maintain backwards compatibility?
-
-**For "Add validation to [form/input]":**
-
-- What specific validation rules should be applied?
-- What error messages should be shown?
-- Should validation happen on input, blur, or submit?
-- How should valid/invalid states be visually indicated?
-- Should existing data be validated against new rules?
-
-**For "Configure [system/tool]":**
-
-- What specific settings need to change?
-- What are the current values and desired values?
-- Are there environment-specific considerations?
-- Should changes be applied to all environments?
-- How do we verify the configuration is working?
-
-**For "Improve [performance/UX]":**
-
-- What specific aspect needs improvement?
-- How do we measure current vs improved state?
-- Are there acceptable trade-offs to consider?
-- Which users/scenarios should this help most?
-- How will we know the improvement was successful?
-
-**SCOPE CLARIFICATION:**
-
+**VERY DETAILED INPUT (minimal clarification needed):**
 ```
-**CHANGE SCOPE CLARIFICATION:**
-To ensure I implement exactly what you need:
+"Change the login error message in src/auth/login.js line 45 
+from 'Login failed' to 'Invalid email or password. Please try again.' 
+and make sure it has the same red styling as other error messages."
+```
+→ **Clarification needed:** None or 1 quick question about edge cases
 
-**Affected Components:**
-- [Component 1]: [What changes here?]
-- [Component 2]: [What changes here?]
-- [Component 3]: [Any related changes needed?]
+**MEDIUM DETAILED INPUT (some clarification needed):**
+```
+"Add email validation to the registration form"
+```
+→ **Clarification needed:** 2-3 questions about rules, messages, timing
 
-**Specific Questions:**
-- [Question 1 about unclear requirement]
-- [Question 2 about implementation approach]
-- [Question 3 about edge cases/scenarios]
+**LOW DETAILED INPUT (lots of clarification needed):**
+```
+"Fix the login issue"
+```
+→ **Clarification needed:** 4+ questions about what's broken, expected behavior
 
-**Assumptions to Verify:**
-- Assumption 1: [state assumption for user to confirm/correct]
-- Assumption 2: [state assumption for user to confirm/correct]
+**ADAPTIVE QUESTIONING PROCESS:**
+
+**Step 1: Analyze input detail level**
+```
+**REQUIREMENT ANALYSIS:**
+Input: "[user's request]"
+Detail level: [High/Medium/Low]
+Clear aspects: [list what's specified]
+Unclear aspects: [list what needs clarification]
 ```
 
-**REQUIREMENT CONFIRMATION:**
-Only after all clarifications, confirm understanding:
+**Step 2: Ask targeted questions (max 5)**
 
+**EFFICIENT CLARIFICATION TEMPLATES:**
+
+**For vague requests:**
+- "What exactly is the current problematic behavior?"
+- "What should happen instead?"
+- "Which specific component/file is affected?"
+- "How will we know it's working correctly?"
+
+**For medium-detail requests:**
+- "Should this follow the existing [pattern] or work differently?"
+- "What should happen in [edge case scenario]?"
+- "Any specific [format/style/validation] requirements?"
+
+**For detailed requests:**
+- "Looks clear - just to confirm: [restate understanding]?"
+- Or skip to implementation if truly clear
+
+**SMART DEFAULTS:**
+Use project patterns when details aren't specified:
+- Error messages → follow existing error message format
+- Validation → use current validation approach  
+- Styling → match existing component styles
+- Behavior → follow established UX patterns
+
+**STREAMLINED CONFIRMATION:**
 ```
-**CLARIFIED REQUIREMENTS:**
-- **What will change:** [Specific component/behavior changes]
-- **How it will work:** [New behavior description]
-- **Files affected:** [List of files that need updates]
-- **Testing approach:** [How to verify the change works]
+**READY TO IMPLEMENT:**
+Change: [one-line summary]
+Files: [affected files]
+Approach: [brief method]
+Duration: [X minutes]
 
-**IMPLEMENTATION APPROACH:**
-- **Method:** [Specific technical approach]
-- **Duration:** [Estimated time: X minutes/hours]
-- **Risk level:** [Low/Medium with reasoning]
-
-Is this understanding complete? Any corrections or additional requirements?
+Proceed? (y/n)
 ```
 
 ---
 
-### STAGE 4: DIRECT IMPLEMENTATION
+### STAGE 4: STREAMLINED IMPLEMENTATION
 
-**ANNOUNCEMENT:** "Requirements clarified. Implementing change directly with real-time progress updates."
+**EXECUTION FLOW:**
 
-**EXECUTION PATTERN:**
-
-1. **Pre-implementation check:**
-
+1. **Quick verification:**
    - Verify current state matches assumptions
-   - Create backup of affected files (if significant)
-   - Confirm no conflicts with recent changes
+   - Confirm no obvious conflicts
 
-2. **Step-by-step implementation with progress updates:**
-
+2. **Implementation with progress:**
    ```
-   **IMPLEMENTING:** [Brief description of current step]
-   **File:** [current file being modified]
-   **Change:** [what specifically is being changed]
+   🔄 **IMPLEMENTING:** [Brief description]
+   📝 **File:** [filename] → [specific change]
    ```
 
-3. **Real-time validation:**
+3. **Essential validation:**
+   - Test key functionality
+   - Verify change works as clarified
 
-   - Test each change immediately after implementation
-   - Verify integration points still work
-   - Check that assumptions hold true
-
-4. **Final verification:**
-   - Run any relevant tests
-   - Verify the change meets clarified requirements
-   - Check for unintended side effects
-
-**COMPLETION ANNOUNCEMENT:**
-
+**COMPLETION:**
 ```
-✅ **CHANGE COMPLETED**
+✅ **COMPLETED**
 
-**What was changed:**
-- [File 1]: [specific changes made]
-- [File 2]: [specific changes made]
+**Changed:** [list of files and key changes]
+**Duration:** [actual time taken]
+**Verified:** [critical functionality tested]
 
-**Verification completed:**
-- [Test/check 1]: ✅ Passed
-- [Test/check 2]: ✅ Passed
-
-**Ready for use** - change meets all clarified requirements.
-```
-
----
-
-### STAGE 5: COMPLETION
-
-**FINAL STATUS:**
-
-```
-✅ **CHANGE COMPLETED SUCCESSFULLY**
-
-**Summary:** [brief description of what was accomplished]
-**Files modified:** [list of files changed]
-**Requirements met:** All clarified requirements have been implemented
-**No logging required** - this was a simple clarification-based change
+Ready for use.
 ```
 
 **PATTERN RECOGNITION:**
-If this is the 3rd+ similar change, suggest:
-
+If similar changes detected:
 ```
-**PATTERN DETECTED:** This type of change has been made [X] times recently.
-**Consider:** Creating a more systematic approach or documenting this pattern for efficiency.
-**Recommend:** Use `/cdd:evolve` to capture this pattern in CLAUDE.md if it becomes frequent.
+💡 **PATTERN NOTED:** Similar change made recently
+Consider using `/cdd:evolve` if this becomes frequent
 ```
 
 ---
